@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QRコード生成ツール</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-color: #1f2937;
+            --border-color: #d1d5db;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background: linear-gradient(135deg, #e0e7ff 0%, #ede9fe 100%);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 4px 6px rgba(0, 0, 0, 0.02);
+            width: 100%;
+            max-width: 420px;
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem;
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        .form-section {
+            width: 100%;
+            max-width: 340px;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-top: 0;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: #111827;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #374151;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            font-family: inherit;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+        }
+
+        .helper-text {
+            font-size: 0.75rem;
+            color: #6b7280;
+            margin-top: 0.4rem;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            margin-top: 0.5rem;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .result-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.4s ease-out;
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        @media (min-width: 768px) {
+            .container {
+                max-width: fit-content;
+                flex-direction: row;
+                align-items: stretch;
+            }
+            .result-container {
+                border-left: 1px solid #e5e7eb;
+                padding-left: 2.5rem;
+            }
+        }
+
+        .result-container.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+            padding: 10px;
+            background: white;
+            border: 1px solid #f3f4f6;
+        }
+
+        .generated-url {
+            font-size: 0.875rem;
+            color: var(--primary-color);
+            word-break: break-all;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .generated-url:hover {
+            color: var(--primary-hover);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="form-section">
+            <h1>QRコード生成</h1>
+
+            <div class="form-group">
+                <label for="date-input">日付 (YYYY/MM/DD)</label>
+                <input type="text" id="date-input" placeholder="日付を選択">
+            </div>
+
+            <div class="form-group">
+                <label for="text-input">テキスト (アルファベットのみ)</label>
+                <input type="text" id="text-input" placeholder="例: takagi" pattern="[a-zA-Z]+" title="アルファベットのみ入力可能です">
+                <div class="helper-text">※半角アルファベットのみ入力可能です。</div>
+            </div>
+
+            <button id="generate-btn">生成</button>
+        </div>
+
+        <div class="result-container" id="result-container">
+            <img id="qr-image" class="qr-code" src="" alt="QRコード">
+            <a id="url-link" class="generated-url" href="#" target="_blank" rel="noopener noreferrer"></a>
+        </div>
+    </div>
+
+    <!-- Flatpickr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ja.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Flatpickrの初期化 (YYYY/MM/DD形式、初期値は今日)
+            flatpickr("#date-input", {
+                locale: "ja",
+                dateFormat: "Y/m/d",
+                defaultDate: "today",
+                allowInput: true,
+                disableMobile: true // モバイルブラウザのデフォルトカレンダーを無効化してFlatpickrを強制
+            });
+
+            const textInput = document.getElementById('text-input');
+            const generateBtn = document.getElementById('generate-btn');
+            const resultContainer = document.getElementById('result-container');
+            const qrImage = document.getElementById('qr-image');
+            const urlLink = document.getElementById('url-link');
+            const dateInput = document.getElementById('date-input');
+
+            // アルファベット以外の入力を防ぐ
+            textInput.addEventListener('input', function (e) {
+                this.value = this.value.replace(/[^a-zA-Z]/g, '');
+            });
+
+            // 生成ボタンのクリックイベント
+            generateBtn.addEventListener('click', function () {
+                const dateValue = dateInput.value;
+                const textValue = textInput.value.trim();
+
+                if (!dateValue) {
+                    alert('日付を入力または選択してください。');
+                    return;
+                }
+                if (!textValue) {
+                    alert('テキストを入力してください。');
+                    textInput.focus();
+                    return;
+                }
+
+                // 2026/08/18 形式から年と月日を抽出
+                const dateParts = dateValue.split('/');
+                const year = dateParts.length === 3 ? dateParts[0] : new Date().getFullYear();
+                const mmdd = dateParts.length === 3 ? dateParts[1] + dateParts[2] : dateValue.replace(/\//g, '');
+
+                // URLの構築
+                const baseUrl = `https://tridentweb-oc.github.io/markup${year}`;
+                const finalUrl = `${baseUrl}/${mmdd}/${textValue}/`;
+
+                // QRコードのURL (QR Server API を使用)
+                const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(finalUrl)}&margin=0`;
+
+                // 結果の表示
+                qrImage.src = qrApiUrl;
+                urlLink.href = finalUrl;
+                urlLink.textContent = finalUrl;
+
+                // 画像が読み込まれたらコンテナを表示（スムーズな体験のため）
+                qrImage.onload = () => {
+                    resultContainer.classList.add('active');
+                };
+            });
+
+            // Enterキーで生成
+            textInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    generateBtn.click();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
