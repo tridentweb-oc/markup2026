@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Styling Generator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;700&family=Fira+Code&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --panel-bg: rgba(255, 255, 255, 0.9);
+            --border-color: rgba(0, 0, 0, 0.1);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --accent: #6366f1;
+            --accent-hover: #4f46e5;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: var(--bg-color);
+            background-image:
+                radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.15) 0px, transparent 50%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #818cf8, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .main-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+            flex-wrap: wrap;
+        }
+
+        .preview-section {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+            background-color: #f8fafc;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .preview-element {
+            width: 100%;
+            max-width: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 2rem;
+            font-size: 2rem;
+            font-weight: 700;
+            line-height: 1.4;
+            color: #ffffff;
+            transition: all 0.1s ease-out;
+            word-break: break-all;
+        }
+
+        .controls-section {
+            width: 450px;
+            background: var(--panel-bg);
+            backdrop-filter: blur(20px);
+            border-left: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            height: calc(100vh - 73px);
+        }
+
+        .controls-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+
+        .control-group {
+            margin-bottom: 2rem;
+            background: rgba(0, 0, 0, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .control-group h2 {
+            font-size: 1.1rem;
+            margin-bottom: 1.25rem;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .control-item {
+            margin-bottom: 1rem;
+        }
+
+        .control-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .control-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .presets-container {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .preset-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            border: 2px solid rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.1s, border-color 0.1s;
+            position: relative;
+            background-color: #f1f5f9;
+            padding: 0;
+            color: var(--text-main);
+        }
+
+        .preset-btn:hover {
+            transform: scale(1.1);
+            border-color: var(--accent);
+            z-index: 2;
+        }
+
+        .preset-none::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 80%;
+            height: 2px;
+            background-color: #ef4444;
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--accent);
+            cursor: pointer;
+        }
+
+        .color-pickers {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .color-picker-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        input[type="color"] {
+            width: 100%;
+            height: 40px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: none;
+        }
+
+        .output-section {
+            padding: 1.5rem 2rem;
+            background: rgba(255, 255, 255, 0.5);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .code-block {
+            background: #f1f5f9;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.875rem;
+            color: #334155;
+            white-space: pre-wrap;
+            margin-bottom: 1rem;
+            border: 1px solid #cbd5e1;
+            position: relative;
+        }
+
+        .copy-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 1rem;
+        }
+
+        .copy-btn:hover {
+            background: var(--accent-hover);
+        }
+
+        .copy-btn.copied {
+            background: #10b981;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+
+        @media (max-width: 900px) {
+            .main-container {
+                flex-direction: column;
+                overflow: auto;
+            }
+
+            .controls-section {
+                width: 100%;
+                height: auto;
+                border-left: none;
+                border-top: 1px solid var(--border-color);
+            }
+
+            .preview-section {
+                min-height: 400px;
+                flex: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+        <h1>CSS Styling Generator</h1>
+    </header>
+
+    <div class="main-container">
+        <!-- Preview -->
+        <div class="preview-section">
+            <p id="preview-element" class="preview-element">
+                Webデザイン
+            </p>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls-section">
+            <div class="controls-scroll">
+
+                <!-- Background Gradient -->
+                <div class="control-group">
+                    <h2>🎨 背景グラデーション (Background)</h2>
+                    <div class="presets-container" id="presets-grad">
+                        <button class="preset-btn" data-c1="#4f46e5" data-c2="#ec4899" data-angle="135" style="background: linear-gradient(135deg, #4f46e5, #ec4899);" title="Sunset"></button>
+                        <button class="preset-btn" data-c1="#0ea5e9" data-c2="#10b981" data-angle="135" style="background: linear-gradient(135deg, #0ea5e9, #10b981);" title="Ocean"></button>
+                        <button class="preset-btn" data-c1="#f59e0b" data-c2="#ef4444" data-angle="135" style="background: linear-gradient(135deg, #f59e0b, #ef4444);" title="Fire"></button>
+                        <button class="preset-btn" data-c1="#8b5cf6" data-c2="#3b82f6" data-angle="135" style="background: linear-gradient(135deg, #8b5cf6, #3b82f6);" title="Berry"></button>
+                        <button class="preset-btn" data-c1="#14b8a6" data-c2="#84cc16" data-angle="135" style="background: linear-gradient(135deg, #14b8a6, #84cc16);" title="Nature"></button>
+                        <button class="preset-btn" data-c1="#2dd4bf" data-c2="#facc15" data-angle="135" style="background: linear-gradient(135deg, #2dd4bf, #facc15);" title="Lemon"></button>
+                    </div>
+                    <div class="color-pickers control-item">
+                        <div class="color-picker-wrapper">
+                            <label class="control-header">Color 1</label>
+                            <input type="color" id="grad-color1" value="#4f46e5">
+                        </div>
+                        <div class="color-picker-wrapper">
+                            <label class="control-header">Color 2</label>
+                            <input type="color" id="grad-color2" value="#ec4899">
+                        </div>
+                    </div>
+                    <div class="control-item">
+                        <div class="control-header">
+                            <span>角度 (Angle)</span>
+                            <span id="grad-angle-val">135deg</span>
+                        </div>
+                        <input type="range" id="grad-angle" min="0" max="360" value="135">
+                    </div>
+                </div>
+
+                <!-- Box Shadow -->
+                <div class="control-group">
+                    <h2>📦 ボックスシャドウ (Box Shadow)</h2>
+                    <div class="presets-container" id="presets-bs">
+                        <button class="preset-btn preset-none" data-x="0" data-y="0" data-blur="0" data-spread="0" data-c="#000000" data-o="0" title="設定なし"></button>
+                        <button class="preset-btn" data-x="0" data-y="4" data-blur="6" data-spread="-1" data-c="#000000" data-o="0.1" style="box-shadow: 0px 4px 6px -1px rgba(0,0,0,0.1);" title="Subtle"></button>
+                        <button class="preset-btn" data-x="0" data-y="10" data-blur="15" data-spread="-3" data-c="#000000" data-o="0.1" style="box-shadow: 0px 10px 15px -3px rgba(0,0,0,0.1);" title="Medium"></button>
+                        <button class="preset-btn" data-x="0" data-y="20" data-blur="25" data-spread="-5" data-c="#000000" data-o="0.15" style="box-shadow: 0px 20px 25px -5px rgba(0,0,0,0.15);" title="Large"></button>
+                        <button class="preset-btn" data-x="0" data-y="0" data-blur="20" data-spread="0" data-c="#4f46e5" data-o="0.4" style="box-shadow: 0px 0px 20px 0px rgba(79,70,229,0.4);" title="Glow"></button>
+                        <button class="preset-btn" data-x="4" data-y="4" data-blur="0" data-spread="0" data-c="#0f172a" data-o="1" style="box-shadow: 4px 4px 0px 0px rgba(15,23,42,1);" title="Solid"></button>
+                    </div>
+                    <div class="control-item">
+                        <div class="control-header"><span>横方向 (X)</span><span id="bs-x-val">0px</span></div>
+                        <input type="range" id="bs-x" min="-50" max="50" value="0">
+                    </div>
+                    <div class="control-item">
+                        <div class="control-header"><span>縦方向 (Y)</span><span id="bs-y-val">10px</span></div>
+                        <input type="range" id="bs-y" min="-50" max="50" value="10">
+                    </div>
+                    <div class="control-item">
+                        <div class="control-header"><span>ぼかし (Blur)</span><span id="bs-blur-val">25px</span></div>
+                        <input type="range" id="bs-blur" min="0" max="100" value="25">
+                    </div>
+                    <div class="control-item">
+                        <div class="control-header"><span>広がり (Spread)</span><span id="bs-spread-val">-5px</span></div>
+                        <input type="range" id="bs-spread" min="-50" max="50" value="-5">
+                    </div>
+                    <div class="color-pickers control-item">
+                        <div class="color-picker-wrapper">
+                            <label class="control-header">影の色</label>
+                            <input type="color" id="bs-color" value="#000000">
+                        </div>
+                        <div class="color-picker-wrapper">
+                            <label class="control-header">透明度</label>
+                            <input type="range" id="bs-opacity" min="0" max="1" step="0.05" value="0.4">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text Shadow -->
+                <div class="control-group">
+                    <h2>🔤 テキストシャドウ (Text Shadow)</h2>
+                    <div class="presets-container" id="presets-ts">
+                        <button class="preset-btn preset-none" data-x="0" data-y="0" data-blur="0" data-c="#000000" data-o="0" title="設定なし"></button>
+                        <button class="preset-btn" data-x="0" data-y="2" data-blur="4" data-c="#000000" data-o="0.3" style="text-shadow: 0px 2px 4px rgba(0,0,0,0.3); font-weight:bold; display:flex; align-items:center; justify-content:center;" title="Subtle">A</button>
+                        <button class="preset-btn" data-x="2" data-y="2" data-blur="0" data-c="#0f172a" data-o="1" style="text-shadow: 2px 2px 0px rgba(15,23,42,1); font-weight:bold; display:flex; align-items:center; justify-content:center;" title="Solid">A</button>
+                        <button class="preset-btn" data-x="0" data-y="0" data-blur="10" data-c="#ec4899" data-o="0.8" style="text-shadow: 0px 0px 10px rgba(236,72,153,0.8); font-weight:bold; display:flex; align-items:center; justify-content:center;" title="Glow">A</button>
+                        <button class="preset-btn" data-x="4" data-y="4" data-blur="10" data-c="#000000" data-o="0.3" style="text-shadow: 4px 4px 10px rgba(0,0,0,0.3); font-weight:bold; display:flex; align-items:center; justify-content:center;" title="Soft">A</button>
+                        <button class="preset-btn" data-x="-2" data-y="-2" data-blur="4" data-c="#10b981" data-o="0.8" style="text-shadow: -2px -2px 4px rgba(16,185,129,0.8); font-weight:bold; display:flex; align-items:center; justify-content:center;" title="Inverse">A</button>
+                    </div>
+                    <div class="control-item">
+                        <div class="control-header"><span>横方向 (X)</span><span id="ts-x-val">0px</span></div>
+                        <input type="range" id="ts-x" min="-20" max="20" value="0">
+                    </div>
+                    <div class="control-item">
+                        <div class="control-header"><span>縦方向 (Y)</span><span id="ts-y-val">2px</span></div>
+                        <input type="range" id="ts-y" min="-20" max="20" value="2">
+                    </div>
+                    <div class="control-item">
+                        <div class="control-header"><span>ぼかし (Blur)</span><span id="ts-blur-val">4px</span></div>
+                        <input type="range" id="ts-blur" min="0" max="30" value="4">
+                    </div>
+                    <div class="color-pickers control-item">
+                        <div class="color-picker-wrapper">
+                            <label class="control-header">影の色</label>
+                            <input type="color" id="ts-color" value="#000000">
+                        </div>
+                        <div class="color-picker-wrapper">
+                            <label class="control-header">透明度</label>
+                            <input type="range" id="ts-opacity" min="0" max="1" step="0.05" value="0.3">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Border Radius -->
+                <div class="control-group">
+                    <h2>⭕️ 角丸 (Border Radius)</h2>
+                    <div class="control-item"
+                        style="margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px dashed rgba(255,255,255,0.2);">
+                        <div class="control-header"><span>一括変更 (All Corners)</span><span id="br-all-val">24px</span>
+                        </div>
+                        <input type="range" id="br-all" min="0" max="100" value="24">
+                    </div>
+                    <div class="control-item">
+                        <div class="control-header"><span>左上 (Top Left)</span><span id="br-tl-val">24px</span></div>
+                        <input type="range" id="br-tl" min="0" max="100" value="24">
+                    </div>
+                    <div class="control-item">
+                        <div class="control-header"><span>右上 (Top Right)</span><span id="br-tr-val">24px</span></div>
+                        <input type="range" id="br-tr" min="0" max="100" value="24">
+                    </div>
+                    <div class="control-item">
+                        <div class="control-header"><span>右下 (Bottom Right)</span><span id="br-br-val">24px</span></div>
+                        <input type="range" id="br-br" min="0" max="100" value="24">
+                    </div>
+                    <div class="control-item">
+                        <div class="control-header"><span>左下 (Bottom Left)</span><span id="br-bl-val">24px</span></div>
+                        <input type="range" id="br-bl" min="0" max="100" value="24">
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Output -->
+            <div class="output-section">
+                <div class="code-block" id="css-output"></div>
+                <button class="copy-btn" id="copy-btn">CSSをコピーする</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Utilities
+        function hexToRgba(hex, alpha) {
+            const r = parseInt(hex.slice(1, 3), 16);
+            const g = parseInt(hex.slice(3, 5), 16);
+            const b = parseInt(hex.slice(5, 7), 16);
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        }
+
+        // DOM Elements
+        const previewEl = document.getElementById('preview-element');
+        const cssOutput = document.getElementById('css-output');
+        const copyBtn = document.getElementById('copy-btn');
+
+        // Inputs
+        const inputs = {
+            gradColor1: document.getElementById('grad-color1'),
+            gradColor2: document.getElementById('grad-color2'),
+            gradAngle: document.getElementById('grad-angle'),
+
+            bsX: document.getElementById('bs-x'),
+            bsY: document.getElementById('bs-y'),
+            bsBlur: document.getElementById('bs-blur'),
+            bsSpread: document.getElementById('bs-spread'),
+            bsColor: document.getElementById('bs-color'),
+            bsOpacity: document.getElementById('bs-opacity'),
+
+            tsX: document.getElementById('ts-x'),
+            tsY: document.getElementById('ts-y'),
+            tsBlur: document.getElementById('ts-blur'),
+            tsColor: document.getElementById('ts-color'),
+            tsOpacity: document.getElementById('ts-opacity'),
+
+            brTl: document.getElementById('br-tl'),
+            brTr: document.getElementById('br-tr'),
+            brBr: document.getElementById('br-br'),
+            brBl: document.getElementById('br-bl'),
+        };
+
+        // Value Displays
+        const valueDisplays = {
+            gradAngle: document.getElementById('grad-angle-val'),
+            bsX: document.getElementById('bs-x-val'),
+            bsY: document.getElementById('bs-y-val'),
+            bsBlur: document.getElementById('bs-blur-val'),
+            bsSpread: document.getElementById('bs-spread-val'),
+            tsX: document.getElementById('ts-x-val'),
+            tsY: document.getElementById('ts-y-val'),
+            tsBlur: document.getElementById('ts-blur-val'),
+            brTl: document.getElementById('br-tl-val'),
+            brTr: document.getElementById('br-tr-val'),
+            brBr: document.getElementById('br-br-val'),
+            brBl: document.getElementById('br-bl-val'),
+        };
+
+        function updatePreview() {
+            // Gradient
+            const bgGradient = `linear-gradient(${inputs.gradAngle.value}deg, ${inputs.gradColor1.value}, ${inputs.gradColor2.value})`;
+            valueDisplays.gradAngle.textContent = `${inputs.gradAngle.value}deg`;
+
+            // Box Shadow
+            const bsRgba = hexToRgba(inputs.bsColor.value, inputs.bsOpacity.value);
+            const boxShadow = `${inputs.bsX.value}px ${inputs.bsY.value}px ${inputs.bsBlur.value}px ${inputs.bsSpread.value}px ${bsRgba}`;
+            valueDisplays.bsX.textContent = `${inputs.bsX.value}px`;
+            valueDisplays.bsY.textContent = `${inputs.bsY.value}px`;
+            valueDisplays.bsBlur.textContent = `${inputs.bsBlur.value}px`;
+            valueDisplays.bsSpread.textContent = `${inputs.bsSpread.value}px`;
+
+            // Text Shadow
+            const tsRgba = hexToRgba(inputs.tsColor.value, inputs.tsOpacity.value);
+            const textShadow = `${inputs.tsX.value}px ${inputs.tsY.value}px ${inputs.tsBlur.value}px ${tsRgba}`;
+            valueDisplays.tsX.textContent = `${inputs.tsX.value}px`;
+            valueDisplays.tsY.textContent = `${inputs.tsY.value}px`;
+            valueDisplays.tsBlur.textContent = `${inputs.tsBlur.value}px`;
+
+            // Border Radius
+            const borderRadius = `${inputs.brTl.value}px ${inputs.brTr.value}px ${inputs.brBr.value}px ${inputs.brBl.value}px`;
+            valueDisplays.brTl.textContent = `${inputs.brTl.value}px`;
+            valueDisplays.brTr.textContent = `${inputs.brTr.value}px`;
+            valueDisplays.brBr.textContent = `${inputs.brBr.value}px`;
+            valueDisplays.brBl.textContent = `${inputs.brBl.value}px`;
+
+            // Apply to Preview
+            previewEl.style.background = bgGradient;
+            previewEl.style.boxShadow = boxShadow;
+            previewEl.style.textShadow = textShadow;
+            previewEl.style.borderRadius = borderRadius;
+
+            // Generate CSS Text
+            const cssText = `background: ${bgGradient};
+box-shadow: ${boxShadow};
+text-shadow: ${textShadow};
+border-radius: ${borderRadius};`;
+            cssOutput.textContent = cssText;
+        }
+
+        // Add Event Listeners to all inputs
+        Object.values(inputs).forEach(input => {
+            input.addEventListener('input', updatePreview);
+        });
+
+        // Presets Logic
+        document.querySelectorAll('#presets-grad .preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                inputs.gradColor1.value = btn.dataset.c1;
+                inputs.gradColor2.value = btn.dataset.c2;
+                inputs.gradAngle.value = btn.dataset.angle;
+                updatePreview();
+            });
+        });
+
+        document.querySelectorAll('#presets-bs .preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                inputs.bsX.value = btn.dataset.x;
+                inputs.bsY.value = btn.dataset.y;
+                inputs.bsBlur.value = btn.dataset.blur;
+                inputs.bsSpread.value = btn.dataset.spread;
+                inputs.bsColor.value = btn.dataset.c;
+                inputs.bsOpacity.value = btn.dataset.o;
+                updatePreview();
+            });
+        });
+
+        document.querySelectorAll('#presets-ts .preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                inputs.tsX.value = btn.dataset.x;
+                inputs.tsY.value = btn.dataset.y;
+                inputs.tsBlur.value = btn.dataset.blur;
+                inputs.tsColor.value = btn.dataset.c;
+                inputs.tsOpacity.value = btn.dataset.o;
+                updatePreview();
+            });
+        });
+
+        // Global border radius slider
+        const brAllInput = document.getElementById('br-all');
+        const brAllValDisplay = document.getElementById('br-all-val');
+
+        brAllInput.addEventListener('input', (e) => {
+            const val = e.target.value;
+            brAllValDisplay.textContent = `${val}px`;
+            inputs.brTl.value = val;
+            inputs.brTr.value = val;
+            inputs.brBr.value = val;
+            inputs.brBl.value = val;
+            updatePreview();
+        });
+
+        // Copy Button Logic
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(cssOutput.textContent).then(() => {
+                const originalText = copyBtn.textContent;
+                copyBtn.textContent = '✅ コピーしました！';
+                copyBtn.classList.add('copied');
+
+                setTimeout(() => {
+                    copyBtn.textContent = originalText;
+                    copyBtn.classList.remove('copied');
+                }, 2000);
+            });
+        });
+
+        // Initial render
+        updatePreview();
+    </script>
+</body>
+
+</html>
