@@ -1,0 +1,15 @@
+body {
+    margin: 0;
+    font-family: "Noto Sans JP", sans-serif;
+    font-optical-sizing: auto;
+}
+
+/* Scroll Animation */
+[data-anime] {
+    opacity: 0;
+    transition: .3s;
+}
+
+[data-anime].is-animated {
+    opacity: 1;
+}
