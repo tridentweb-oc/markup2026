@@ -1,15 +1,330 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* リサイズ時の不要なアニメーション（フラッシュ）を防止 */
+.resize-animation-stopper * {
+    transition: none !important;
+    animation: none !important;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
     font-family: "Noto Sans JP", sans-serif;
     font-optical-sizing: auto;
 }
 
-/* Scroll Animation */
+body.is-menu-open {
+    overflow: hidden;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    vertical-align: bottom;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* header */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    width: 100%;
+    padding: 30px 5%;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: grid;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+header h1 a {
+    color: #333;
+}
+
+/* Mobile Navigation Full Screen */
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    z-index: 9998;
+}
+
+body.is-menu-open nav#global-nav {
+    opacity: 1;
+    visibility: visible;
+}
+
+nav ul {
+    padding-left: 0;
+    list-style-type: none;
+    display: grid;
+    grid-auto-flow: row;
+    gap: 30px;
+    text-align: center;
+}
+
+nav ul a {
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Hamburger Button */
+.hamburger {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #333;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.hamburger span {
+    display: block;
+    width: 30px;
+    height: 3px;
+    background-color: #fff;
+    transition: transform 0.3s, opacity 0.3s;
+}
+
+body.is-menu-open .hamburger span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+}
+
+body.is-menu-open .hamburger span:nth-child(2) {
+    opacity: 0;
+}
+
+body.is-menu-open .hamburger span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+}
+
+/* footer */
+footer {
+    padding: 50px 5%;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+}
+
+.mainvisual,
+section {
+    max-width: 1000px;
+    margin: auto;
+    padding: 120px 5%;
+    text-align: center;
+}
+
+.mainvisual {
+    padding-bottom: 0;
+}
+
+@media (700px <=width) {
+    header {
+        grid-auto-flow: column;
+        justify-content: space-between;
+        align-items: center;
+        text-align: left;
+    }
+
+    .hamburger {
+        display: none;
+    }
+
+    nav {
+        position: static;
+        width: auto;
+        height: auto;
+        background-color: transparent;
+        display: block;
+        opacity: 1;
+        visibility: visible;
+    }
+
+    nav ul {
+        grid-auto-flow: column;
+        gap: 20px;
+    }
+
+    nav ul a {
+        color: #333;
+        font-size: 16px;
+        font-weight: normal;
+    }
+}
+
+/* =========================================
+   Scroll Animation (data-anime)
+   ========================================= */
+
+/* Base settings for all animations */
 [data-anime] {
     opacity: 0;
-    transition: .3s;
+    visibility: hidden;
+    transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 [data-anime].is-animated {
     opacity: 1;
+    visibility: visible;
+}
+
+/* 1. Fade Up (下から上へ) */
+[data-anime="up"] {
+    transform: translateY(50px);
+}
+
+[data-anime="up"].is-animated {
+    transform: translateY(0);
+}
+
+/* 2. Fade Down (上から下へ) */
+[data-anime="down"] {
+    transform: translateY(-50px);
+}
+
+[data-anime="down"].is-animated {
+    transform: translateY(0);
+}
+
+/* 3. Fade Left (右から左へ) */
+[data-anime="left"] {
+    transform: translateX(50px);
+}
+
+[data-anime="left"].is-animated {
+    transform: translateX(0);
+}
+
+/* 4. Fade Right (左から右へ) */
+[data-anime="right"] {
+    transform: translateX(-50px);
+}
+
+[data-anime="right"].is-animated {
+    transform: translateX(0);
+}
+
+/* 5. Flip Left (縦軸で回転) */
+[data-anime="flip-left"] {
+    transform: perspective(600px) rotateY(-90deg);
+}
+
+[data-anime="flip-left"].is-animated {
+    transform: perspective(600px) rotateY(0);
+}
+
+/* 6. Flip Right (縦軸で逆回転) */
+[data-anime="flip-right"] {
+    transform: perspective(600px) rotateY(90deg);
+}
+
+[data-anime="flip-right"].is-animated {
+    transform: perspective(600px) rotateY(0);
+}
+
+/* 7. Zoom In (拡大しながら出現) */
+[data-anime="zoom-in"] {
+    transform: scale(0.8);
+}
+
+[data-anime="zoom-in"].is-animated {
+    transform: scale(1);
+}
+
+/* 8. Flip Up (横軸で下から回転) */
+[data-anime="flip-up"] {
+    transform: perspective(600px) rotateX(-90deg);
+}
+
+[data-anime="flip-up"].is-animated {
+    transform: perspective(600px) rotateX(0);
+}
+
+/* 9. Flip Down (横軸で上から回転) */
+[data-anime="flip-down"] {
+    transform: perspective(600px) rotateX(90deg);
+}
+
+[data-anime="flip-down"].is-animated {
+    transform: perspective(600px) rotateX(0);
+}
+
+/* 10. Zoom Out (縮小しながら出現) */
+[data-anime="zoom-out"] {
+    transform: scale(1.2);
+}
+
+[data-anime="zoom-out"].is-animated {
+    transform: scale(1);
+}
+
+/* 11. Bounce 系 (バウンド・弾むような動き) */
+[data-anime^="bounce"] {
+    /* bounceから始まる値には、行き過ぎて戻る特殊なイージングを適用 */
+    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+[data-anime="bounce-in"] {
+    transform: scale(0.5);
+}
+
+[data-anime="bounce-in"].is-animated {
+    transform: scale(1);
+}
+
+[data-anime="bounce-up"] {
+    transform: translateY(100px);
+}
+
+[data-anime="bounce-up"].is-animated {
+    transform: translateY(0);
+}
+
+[data-anime="bounce-down"] {
+    transform: translateY(-100px);
+}
+
+[data-anime="bounce-down"].is-animated {
+    transform: translateY(0);
+}
+
+/* Default (値なしや "fade" の場合は単なるフェードイン) */
+[data-anime="fade"],
+[data-anime=""] {
+    transform: none;
 }
