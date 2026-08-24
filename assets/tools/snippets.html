@@ -10,10 +10,111 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;700&display=swap"
         rel="stylesheet">
+
+    <!-- サイト用ベースCSS / FontAwesome / JS -->
+    <link rel="stylesheet" href="../../assets/base.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- ツール用CSS (上書き) -->
     <link rel="stylesheet" href="./style.css">
+
     <style>
+        .snippet-section {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto 40px;
+        }
 
+        .snippet-section-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border-color);
+            color: var(--text-main);
+            text-align: left;
+        }
 
+        .snippet-block {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .snippet-header {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .snippet-header h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .copy-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .copy-btn:hover {
+            background: var(--accent-hover);
+        }
+
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+
+        .snippet-preview {
+            padding: 30px 20px;
+            background: #fdfdfd;
+        }
+
+        /* プレビュー内の余白をリセット（コンポーネント単体の見栄えのため） */
+        .snippet-preview>[class^="column-"],
+        .snippet-preview>.slideshow,
+        .snippet-preview>.youtube,
+        .snippet-preview>.accordion,
+        .snippet-preview>.marquee,
+        .snippet-preview>.status-bars,
+        .snippet-preview>.timeline,
+        .snippet-preview>.gallery,
+        .snippet-preview>.sns-links {
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+        }
+
+        .snippet-code {
+            background: #1e1e1e;
+            padding: 20px;
+            overflow-x: auto;
+            text-align: left;
+        }
+
+        .snippet-code pre {
+            margin: 0;
+        }
+
+        .snippet-code code {
+            color: #d4d4d4;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
     </style>
 </head>
 
@@ -22,10 +123,391 @@
         <h1>スニペット</h1>
     </header>
 
-    <div class="main-container centered">
-        <div class="card-container">
-            <h2>スニペット</h2>
+    <div class="main-container centered" style="padding-top: 40px; padding-bottom: 100px; display: block;">
+
+        <!-- ==============================================
+             カテゴリ A: カラム (Columns)
+        ============================================== -->
+        <div class="snippet-section">
+            <h2 class="snippet-section-title">カラム (Columns)</h2>
+
+            <!-- 2カラム -->
+            <div class="snippet-block">
+                <div class="snippet-header">
+                    <h3>2カラム (column-2)</h3>
+                    <button class="copy-btn">コピー</button>
+                </div>
+                <div class="snippet-preview">
+                    <div class="column-2">
+                        <div>画像やテキスト、コンポーネントを入れてください。</div>
+                        <div>画像やテキスト、コンポーネントを入れてください。</div>
+                    </div>
+                </div>
+                <div class="snippet-code">
+                    <pre><code>&lt;div class="column-2"&gt;
+    &lt;div&gt;画像やテキスト、コンポーネントを入れてください。&lt;/div&gt;
+    &lt;div&gt;画像やテキスト、コンポーネントを入れてください。&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- 3カラム -->
+            <div class="snippet-block">
+                <div class="snippet-header">
+                    <h3>3カラム (column-3)</h3>
+                    <button class="copy-btn">コピー</button>
+                </div>
+                <div class="snippet-preview">
+                    <div class="column-3">
+                        <div>画像やテキスト、コンポーネントを入れてください。</div>
+                        <div>画像やテキスト、コンポーネントを入れてください。</div>
+                        <div>画像やテキスト、コンポーネントを入れてください。</div>
+                    </div>
+                </div>
+                <div class="snippet-code">
+                    <pre><code>&lt;div class="column-3"&gt;
+    &lt;div&gt;画像やテキスト、コンポーネントを入れてください。&lt;/div&gt;
+    &lt;div&gt;画像やテキスト、コンポーネントを入れてください。&lt;/div&gt;
+    &lt;div&gt;画像やテキスト、コンポーネントを入れてください。&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- 4カラム -->
+            <div class="snippet-block">
+                <div class="snippet-header">
+                    <h3>4カラム (column-4)</h3>
+                    <button class="copy-btn">コピー</button>
+                </div>
+                <div class="snippet-preview">
+                    <div class="column-4">
+                        <div>画像やテキスト、コンポーネントを入れてください。</div>
+                        <div>画像やテキスト、コンポーネントを入れてください。</div>
+                        <div>画像やテキスト、コンポーネントを入れてください。</div>
+                        <div>画像やテキスト、コンポーネントを入れてください。</div>
+                    </div>
+                </div>
+                <div class="snippet-code">
+                    <pre><code>&lt;div class="column-4"&gt;
+    &lt;div&gt;画像やテキスト、コンポーネントを入れてください。&lt;/div&gt;
+    &lt;div&gt;画像やテキスト、コンポーネントを入れてください。&lt;/div&gt;
+    &lt;div&gt;画像やテキスト、コンポーネントを入れてください。&lt;/div&gt;
+    &lt;div&gt;画像やテキスト、コンポーネントを入れてください。&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- 5カラム -->
+            <div class="snippet-block">
+                <div class="snippet-header">
+                    <h3>5カラム (column-5)</h3>
+                    <button class="copy-btn">コピー</button>
+                </div>
+                <div class="snippet-preview">
+                    <div class="column-5">
+                        <div>画像やテキスト、コンポーネントを入れてください。</div>
+                        <div>画像やテキスト、コンポーネントを入れてください。</div>
+                        <div>画像やテキスト、コンポーネントを入れてください。</div>
+                        <div>画像やテキスト、コンポーネントを入れてください。</div>
+                        <div>画像やテキスト、コンポーネントを入れてください。</div>
+                    </div>
+                </div>
+                <div class="snippet-code">
+                    <pre><code>&lt;div class="column-5"&gt;
+    &lt;div&gt;画像やテキスト、コンポーネントを入れてください。&lt;/div&gt;
+    &lt;div&gt;画像やテキスト、コンポーネントを入れてください。&lt;/div&gt;
+    &lt;div&gt;画像やテキスト、コンポーネントを入れてください。&lt;/div&gt;
+    &lt;div&gt;画像やテキスト、コンポーネントを入れてください。&lt;/div&gt;
+    &lt;div&gt;画像やテキスト、コンポーネントを入れてください。&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
         </div>
+
+        <!-- ==============================================
+             カテゴリ B: コンポーネント (Components)
+        ============================================== -->
+        <div class="snippet-section">
+            <h2 class="snippet-section-title">コンポーネント (Components)</h2>
+
+            <!-- カード -->
+            <div class="snippet-block">
+                <div class="snippet-header">
+                    <h3>カード (card)</h3>
+                    <button class="copy-btn">コピー</button>
+                </div>
+                <div class="snippet-preview" style="max-width: 300px; margin: 0 auto;">
+                    <div class="card">
+                        <img src="https://placehold.co/400x400/eee/31343C?text=Card+Image" alt="カード画像">
+                        <h3>タイトル</h3>
+                        <p>カードの内容をここに入力します。様々なレイアウトの中で使えます。</p>
+                    </div>
+                </div>
+                <div class="snippet-code">
+                    <pre><code>&lt;div class="card"&gt;
+    &lt;img src="https://placehold.co/400x400/eee/31343C?text=Card+Image" alt="カード画像"&gt;
+    &lt;h3&gt;タイトル&lt;/h3&gt;
+    &lt;p&gt;カードの内容をここに入力します。様々なレイアウトの中で使えます。&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- スライドショー -->
+            <div class="snippet-block">
+                <div class="snippet-header">
+                    <h3>スライドショー (slideshow)</h3>
+                    <button class="copy-btn">コピー</button>
+                </div>
+                <div class="snippet-preview">
+                    <div class="slideshow">
+                        <div class="is-active">
+                            <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1000&q=80"
+                                alt="スライド1">
+                        </div>
+                        <div>
+                            <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1000&q=80"
+                                alt="スライド2">
+                        </div>
+                        <div>
+                            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1000&q=80"
+                                alt="スライド3">
+                        </div>
+                    </div>
+                </div>
+                <div class="snippet-code">
+                    <pre><code>&lt;div class="slideshow"&gt;
+    &lt;div class="is-active"&gt;
+        &lt;img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=1000&q=80" alt="スライド1"&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+        &lt;img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1000&q=80" alt="スライド2"&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+        &lt;img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1000&q=80" alt="スライド3"&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- YouTube -->
+            <div class="snippet-block">
+                <div class="snippet-header">
+                    <h3>YouTube埋め込み (youtube)</h3>
+                    <button class="copy-btn">コピー</button>
+                </div>
+                <div class="snippet-preview">
+                    <div class="youtube">
+                        <div>
+                            <iframe src="https://www.youtube.com/embed/M7lc1UVf-VE" title="YouTube" frameborder="0"
+                                allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+                <div class="snippet-code">
+                    <pre><code>&lt;div class="youtube"&gt;
+    &lt;div&gt;
+        &lt;iframe src="https://www.youtube.com/embed/M7lc1UVf-VE" title="YouTube" frameborder="0" allowfullscreen&gt;&lt;/iframe&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- アコーディオン -->
+            <div class="snippet-block">
+                <div class="snippet-header">
+                    <h3>アコーディオン (accordion)</h3>
+                    <button class="copy-btn">コピー</button>
+                </div>
+                <div class="snippet-preview">
+                    <div class="accordion">
+                        <details>
+                            <summary>ここに質問や用語を入力してください</summary>
+                            <div>
+                                <p>ここに回答や詳細な説明を記述します。クリックで簡単に開閉できる便利なコンポーネントです。</p>
+                            </div>
+                        </details>
+                        <details>
+                            <summary>追加したい場合はどうすればいいですか？</summary>
+                            <div>
+                                <p>&lt;details&gt;...&lt;/details&gt; のブロックをコピーして、すぐ下に貼り付けるだけで簡単に追加できます。</p>
+                            </div>
+                        </details>
+                    </div>
+                </div>
+                <div class="snippet-code">
+                    <pre><code>&lt;div class="accordion"&gt;
+    &lt;details&gt;
+        &lt;summary&gt;ここに質問や用語を入力してください&lt;/summary&gt;
+        &lt;div&gt;
+            &lt;p&gt;ここに回答や詳細な説明を記述します。クリックで簡単に開閉できる便利なコンポーネントです。&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/details&gt;
+    &lt;details&gt;
+        &lt;summary&gt;追加したい場合はどうすればいいですか？&lt;/summary&gt;
+        &lt;div&gt;
+            &lt;p&gt;&amp;lt;details&amp;gt;...&amp;lt;/details&amp;gt; のブロックをコピーして、すぐ下に貼り付けるだけで簡単に追加できます。&lt;/p&gt;
+        &lt;/div&gt;
+    &lt;/details&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- ギャラリー -->
+            <div class="snippet-block">
+                <div class="snippet-header">
+                    <h3>ギャラリー (gallery)</h3>
+                    <button class="copy-btn">コピー</button>
+                </div>
+                <div class="snippet-preview">
+                    <div class="gallery">
+                        <div><img
+                                src="https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?auto=format&fit=crop&w=400&q=80"
+                                alt="写真1"></div>
+                        <div><img
+                                src="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=400&q=80"
+                                alt="写真2"></div>
+                        <div><img
+                                src="https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?auto=format&fit=crop&w=400&q=80"
+                                alt="写真3"></div>
+                        <div><img
+                                src="https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?auto=format&fit=crop&w=400&q=80"
+                                alt="写真4"></div>
+                    </div>
+                </div>
+                <div class="snippet-code">
+                    <pre><code>&lt;div class="gallery"&gt;
+    &lt;div&gt;&lt;img src="https://images.unsplash.com/photo-1518020382113-a7e8fc38eac9?auto=format&fit=crop&w=400&q=80" alt="写真1"&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=400&q=80" alt="写真2"&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;img src="https://images.unsplash.com/photo-1517423440428-a5a00ad493e8?auto=format&fit=crop&w=400&q=80" alt="写真3"&gt;&lt;/div&gt;
+    &lt;div&gt;&lt;img src="https://images.unsplash.com/photo-1524250502761-1ac6f2e30d43?auto=format&fit=crop&w=400&q=80" alt="写真4"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- マーキー -->
+            <div class="snippet-block">
+                <div class="snippet-header">
+                    <h3>流れる文字 (marquee)</h3>
+                    <button class="copy-btn">コピー</button>
+                </div>
+                <div class="snippet-preview">
+                    <div class="marquee">
+                        <p>WELCOME TO MY WEBSITE ★ WEB DESIGN IS FUN ★ ENJOY CODING ★ </p>
+                    </div>
+                </div>
+                <div class="snippet-code">
+                    <pre><code>&lt;div class="marquee"&gt;
+    &lt;p&gt;WELCOME TO MY WEBSITE ★ WEB DESIGN IS FUN ★ ENJOY CODING ★ &lt;/p&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- ステータスバー -->
+            <div class="snippet-block">
+                <div class="snippet-header">
+                    <h3>ステータスバー (status-bars)</h3>
+                    <button class="copy-btn">コピー</button>
+                </div>
+                <div class="snippet-preview">
+                    <div class="status-bars">
+                        <div>
+                            <span>ゲームの腕前</span>
+                            <div><span style="width: 90%;"></span></div>
+                        </div>
+                        <div>
+                            <span>睡眠欲</span>
+                            <div><span style="width: 100%;"></span></div>
+                        </div>
+                        <div>
+                            <span>勉強のモチベ</span>
+                            <div><span style="width: 30%;"></span></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="snippet-code">
+                    <pre><code>&lt;div class="status-bars"&gt;
+    &lt;div&gt;
+        &lt;span&gt;ゲームの腕前&lt;/span&gt;
+        &lt;div&gt;&lt;span style="width: 90%;"&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+        &lt;span&gt;睡眠欲&lt;/span&gt;
+        &lt;div&gt;&lt;span style="width: 100%;"&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+        &lt;span&gt;勉強のモチベ&lt;/span&gt;
+        &lt;div&gt;&lt;span style="width: 30%;"&gt;&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- タイムライン -->
+            <div class="snippet-block">
+                <div class="snippet-header">
+                    <h3>タイムライン (timeline)</h3>
+                    <button class="copy-btn">コピー</button>
+                </div>
+                <div class="snippet-preview">
+                    <div class="timeline">
+                        <div>
+                            <h4>2010年</h4>
+                            <p>ここに出来事や歴史を書き込みます。</p>
+                        </div>
+                        <div>
+                            <h4>2015年</h4>
+                            <p>ここに出来事や歴史を書き込みます。</p>
+                        </div>
+                        <div>
+                            <h4>現在</h4>
+                            <p>ここに出来事や歴史を書き込みます。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="snippet-code">
+                    <pre><code>&lt;div class="timeline"&gt;
+    &lt;div&gt;
+        &lt;h4&gt;2010年&lt;/h4&gt;
+        &lt;p&gt;ここに出来事や歴史を書き込みます。&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+        &lt;h4&gt;2015年&lt;/h4&gt;
+        &lt;p&gt;ここに出来事や歴史を書き込みます。&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+        &lt;h4&gt;現在&lt;/h4&gt;
+        &lt;p&gt;ここに出来事や歴史を書き込みます。&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+
+            <!-- SNSリンク集 -->
+            <div class="snippet-block">
+                <div class="snippet-header">
+                    <h3>SNSリンク集 (sns-links)</h3>
+                    <button class="copy-btn">コピー</button>
+                </div>
+                <div class="snippet-preview">
+                    <div class="sns-links">
+                        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+                        <a href="#" aria-label="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="snippet-code">
+                    <pre><code>&lt;div class="sns-links"&gt;
+    &lt;a href="#" aria-label="Instagram"&gt;&lt;i class="fa-brands fa-instagram"&gt;&lt;/i&gt;&lt;/a&gt;
+    &lt;a href="#" aria-label="TikTok"&gt;&lt;i class="fa-brands fa-tiktok"&gt;&lt;/i&gt;&lt;/a&gt;
+    &lt;a href="#" aria-label="X (Twitter)"&gt;&lt;i class="fa-brands fa-x-twitter"&gt;&lt;/i&gt;&lt;/a&gt;
+    &lt;a href="#" aria-label="YouTube"&gt;&lt;i class="fa-brands fa-youtube"&gt;&lt;/i&gt;&lt;/a&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+            </div>
+
+        </div> <!-- snippet-section end -->
+
     </div>
 
     <!-- Global Navigation -->
@@ -83,6 +565,31 @@
             </svg>
         </a>
     </nav>
+
+    <!-- サイト用のJS -->
+    <script src="../../assets/base.js"></script>
+
+    <!-- スニペット画面用JS (コピー機能) -->
+    <script>
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const codeBlock = e.target.closest('.snippet-block').querySelector('.snippet-code pre code');
+                if (!codeBlock) return;
+
+                const codeText = codeBlock.textContent;
+                navigator.clipboard.writeText(codeText).then(() => {
+                    const originalText = e.target.textContent;
+                    e.target.textContent = 'コピー完了！';
+                    e.target.style.background = '#10b981';
+
+                    setTimeout(() => {
+                        e.target.textContent = originalText;
+                        e.target.style.background = '';
+                    }, 2000);
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

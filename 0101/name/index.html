@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="../../assets/base.css">
     <link rel="stylesheet" href="./style.css">
     <script defer src="../../assets/base.js"></script>
@@ -15,12 +16,17 @@
 
 <body>
     <header>
+        <!--
+        ① サイトのタイトルを変更しましょう。
+        解説：HTMLは「Hypertext Markup Language」の略で、直訳すると「すごい文書に意味をもたせるための言語」です。
+        <h1>のような印をタグと呼び、h（heading）はテキストに「見出し」という意味を持たせます。
+        -->
         <h1><a href="./index.html">サイトのタイトルを入力</a></h1>
         <nav id="global-nav">
             <ul>
                 <li><a href="#top">TOP</a></li>
                 <li><a href="#about">ABOUT</a></li>
-                <li><a href="#media">MEDIA</a></li>
+                <li><a href="#extra">EXTRA</a></li>
             </ul>
         </nav>
     </header>
@@ -31,17 +37,32 @@
     </button>
     <main>
         <div class="mainvisual">
-            <img data-anime="" src="../../assets/images/mainvisual.jpg" alt="">
+            <div class="inner">
+                <!--
+                ② 画像のURLを変更して、好きな画像を表示しましょう。
+                解説：imgは「image」の略、srcは「source（情報源・出所）」の略です。
+                「src」のようにタグに追加して追加情報を設定するものを「属性」と言います。
+                -->
+                <img data-anime="" src="../../assets/images/mainvisual.jpg" alt="">
+            </div>
         </div>
         <section id="about">
-            <h2 data-anime="">ABOUT</h2>
+            <div class="inner">
+                <h2 data-anime="">ABOUT</h2>
+
+            </div>
         </section>
-        <section id="media">
-            <h2 data-anime="">MEDIA</h2>
+        <section id="extra">
+            <div class="inner">
+                <h2 data-anime="fade">EXTRA</h2>
+
+            </div>
         </section>
     </main>
     <footer>
-        <p><small>&copy; ⚪︎⚪︎ All rights reserved.</small></p>
+        <div class="inner">
+            <p><small>&copy; ⚪︎⚪︎ All rights reserved.</small></p>
+        </div>
     </footer>
 </body>
 
