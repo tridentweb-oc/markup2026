@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QRコード生成</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="./style.css">
+
+    <style>
+        .form-section {
+            width: 100%;
+            max-width: 340px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #374151;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-sizing: border-box;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            font-family: inherit;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+        }
+
+        .helper-text {
+            font-size: 0.75rem;
+            color: #6b7280;
+            margin-top: 0.4rem;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+            margin-top: 0.5rem;
+        }
+
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .result-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.4s ease-out;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        @media (min-width: 768px) {
+            .card-container {
+                max-width: fit-content;
+                flex-direction: row;
+                align-items: stretch;
+            }
+
+            .result-container {
+                border-left: 1px solid #e5e7eb;
+                padding-left: 2.5rem;
+                border-top: none;
+                padding-top: 0;
+            }
+        }
+
+        .result-container.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+            padding: 10px;
+            background: white;
+            border: 1px solid #f3f4f6;
+        }
+
+        .generated-url {
+            font-size: 0.875rem;
+            color: var(--primary-color);
+            word-break: break-all;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .generated-url:hover {
+            color: var(--primary-hover);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <h1>QRコード生成</h1>
+    </header>
+
+    <div class="main-container centered">
+        <div class="card-container">
+            <div class="form-section">
+
+                <div class="form-group">
+                    <label for="date-input">日付 (YYYY/MM/DD)</label>
+                    <input type="text" id="date-input" placeholder="日付を選択">
+                </div>
+
+                <div class="form-group">
+                    <label for="text-input">テキスト (アルファベットのみ)</label>
+                    <input type="text" id="text-input" placeholder="例: takagi" pattern="[a-zA-Z]+"
+                        title="アルファベットのみ入力可能です">
+                    <div class="helper-text">※半角アルファベットのみ入力可能です。</div>
+                </div>
+
+                <button id="generate-btn">生成</button>
+            </div>
+
+            <div class="result-container" id="result-container">
+                <img id="qr-image" class="qr-code" src="" alt="QRコード">
+                <a id="url-link" class="generated-url" href="#" target="_blank" rel="noopener noreferrer"></a>
+            </div>
+        </div>
+
+        <!-- Global Navigation -->
+        <nav class="global-nav">
+            <a href="index.html" class="nav-item" title="Manual">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+                </svg>
+            </a>
+            <a href="generator.html" class="nav-item" title="CSS Generator">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="13.5" cy="6.5" r=".5" />
+                    <circle cx="17.5" cy="10.5" r=".5" />
+                    <circle cx="8.5" cy="7.5" r=".5" />
+                    <circle cx="6.5" cy="12.5" r=".5" />
+                    <path
+                        d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
+                </svg>
+            </a>
+            <a href="snippets.html" class="nav-item" title="Snippets">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="16 18 22 12 16 6" />
+                    <polyline points="8 6 2 12 8 18" />
+                </svg>
+            </a>
+            <a href="animation.html" class="nav-item" title="Animation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                        d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+                    <path d="M5 3v4" />
+                    <path d="M19 17v4" />
+                    <path d="M3 5h4" />
+                    <path d="M17 19h4" />
+                </svg>
+            </a>
+            <a href="qr.html" class="nav-item active" title="QR Code">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="5" height="5" x="3" y="3" rx="1" />
+                    <rect width="5" height="5" x="16" y="3" rx="1" />
+                    <rect width="5" height="5" x="3" y="16" rx="1" />
+                    <path d="M21 16h-3a2 2 0 0 0-2 2v3" />
+                    <path d="M21 21v.01" />
+                    <path d="M12 7v3a2 2 0 0 1-2 2H7" />
+                    <path d="M3 12h.01" />
+                    <path d="M12 3h.01" />
+                    <path d="M12 16v.01" />
+                    <path d="M16 12h1" />
+                    <path d="M21 12v.01" />
+                    <path d="M12 21v-1" />
+                </svg>
+            </a>
+        </nav>
+
+        <!-- Flatpickr JS -->
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ja.js"></script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // Flatpickrの初期化 (YYYY/MM/DD形式、初期値は今日)
+                flatpickr("#date-input", {
+                    locale: "ja",
+                    dateFormat: "Y/m/d",
+                    defaultDate: "today",
+                    allowInput: true,
+                    disableMobile: true // モバイルブラウザのデフォルトカレンダーを無効化してFlatpickrを強制
+                });
+
+                const textInput = document.getElementById('text-input');
+                const generateBtn = document.getElementById('generate-btn');
+                const resultContainer = document.getElementById('result-container');
+                const qrImage = document.getElementById('qr-image');
+                const urlLink = document.getElementById('url-link');
+                const dateInput = document.getElementById('date-input');
+
+                // アルファベット以外の入力を防ぐ
+                textInput.addEventListener('input', function (e) {
+                    this.value = this.value.replace(/[^a-zA-Z]/g, '');
+                });
+
+                // 生成ボタンのクリックイベント
+                generateBtn.addEventListener('click', function () {
+                    const dateValue = dateInput.value;
+                    const textValue = textInput.value.trim();
+
+                    if (!dateValue) {
+                        alert('日付を入力または選択してください。');
+                        return;
+                    }
+                    if (!textValue) {
+                        alert('テキストを入力してください。');
+                        textInput.focus();
+                        return;
+                    }
+
+                    // 2026/08/18 形式から年と月日を抽出
+                    const dateParts = dateValue.split('/');
+                    const year = dateParts.length === 3 ? dateParts[0] : new Date().getFullYear();
+                    const mmdd = dateParts.length === 3 ? dateParts[1] + dateParts[2] : dateValue.replace(/\//g, '');
+
+                    // URLの構築
+                    const baseUrl = `https://tridentweb-oc.github.io/markup${year}`;
+                    const finalUrl = `${baseUrl}/${mmdd}/${textValue}/`;
+
+                    // QRコードのURL (QR Server API を使用)
+                    const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(finalUrl)}&margin=0`;
+
+                    // 結果の表示
+                    qrImage.src = qrApiUrl;
+                    urlLink.href = finalUrl;
+                    urlLink.textContent = finalUrl;
+
+                    // 画像が読み込まれたらコンテナを表示（スムーズな体験のため）
+                    qrImage.onload = () => {
+                        resultContainer.classList.add('active');
+                    };
+                });
+
+                // Enterキーで生成
+                textInput.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        generateBtn.click();
+                    }
+                });
+            });
+        </script>
+</body>
+
+</html>
