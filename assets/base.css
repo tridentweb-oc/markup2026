@@ -329,6 +329,141 @@ main {
     transform: translateY(0);
 }
 
+/* 12. Blur (ブラー/ピント合わせ) */
+[data-anime="blur"] {
+    filter: blur(10px);
+}
+
+[data-anime="blur"].is-animated {
+    filter: blur(0);
+}
+
+/* 13. Wipe Right (左から右へワイプ) */
+[data-anime="wipe-right"] {
+    -webkit-mask-image: linear-gradient(to right, #000 50%, transparent 50%);
+    mask-image: linear-gradient(to right, #000 50%, transparent 50%);
+    -webkit-mask-size: 200% 100%;
+    mask-size: 200% 100%;
+    -webkit-mask-position: 100% 0;
+    mask-position: 100% 0;
+}
+
+[data-anime="wipe-right"].is-animated {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+}
+
+/* 14. Wipe Down (上から下へワイプ) */
+[data-anime="wipe-down"] {
+    -webkit-mask-image: linear-gradient(to bottom, #000 50%, transparent 50%);
+    mask-image: linear-gradient(to bottom, #000 50%, transparent 50%);
+    -webkit-mask-size: 100% 200%;
+    mask-size: 100% 200%;
+    -webkit-mask-position: 0 100%;
+    mask-position: 0 100%;
+}
+
+[data-anime="wipe-down"].is-animated {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+}
+
+/* 15. Rotate In (回転しながら出現) */
+[data-anime="rotate-in"] {
+    transform: rotate(-180deg) scale(0.5);
+}
+
+[data-anime="rotate-in"].is-animated {
+    transform: rotate(0) scale(1);
+}
+
+/* 16. Swing (看板のように揺れる) */
+[data-anime="swing"] {
+    transform-origin: top center;
+    transform: perspective(600px) rotateX(-90deg);
+}
+
+[data-anime="swing"].is-animated {
+    transform: perspective(600px) rotateX(0);
+    transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+
+/* 20. Jelly (ゼリー・ぷるぷる) */
+[data-anime="jelly"] {
+    transform-origin: bottom center;
+}
+[data-anime="jelly"].is-animated {
+    animation: jelly-anim 0.8s forwards;
+}
+@keyframes jelly-anim {
+    0% { transform: scale(1, 1); }
+    30% { transform: scale(1.25, 0.75); }
+    40% { transform: scale(0.75, 1.25); }
+    50% { transform: scale(1.15, 0.85); }
+    65% { transform: scale(0.95, 1.05); }
+    75% { transform: scale(1.05, 0.95); }
+    100% { transform: scale(1, 1); }
+}
+
+/* 18. Drop (上からドスンと落下) */
+[data-anime="drop"] {
+    transform-origin: bottom center;
+}
+[data-anime="drop"].is-animated {
+    animation: drop-anim 0.6s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
+}
+@keyframes drop-anim {
+    0% { transform: translateY(-100px) scaleY(1.2); opacity: 0; }
+    60% { transform: translateY(0) scaleY(0.7) scaleX(1.1); opacity: 1; }
+    80% { transform: translateY(-10px) scaleY(1.05) scaleX(0.95); opacity: 1; }
+    100% { transform: translateY(0) scaleY(1) scaleX(1); opacity: 1; }
+}
+
+/* 19. Shake (ぶるぶる震える) */
+[data-anime="shake"].is-animated {
+    animation: shake-anim 0.8s ease-in-out forwards;
+}
+@keyframes shake-anim {
+    0% { transform: translateX(0); opacity: 0; }
+    10% { transform: translateX(0); opacity: 1; }
+    20% { transform: translateX(-10px); opacity: 1; }
+    30% { transform: translateX(10px); opacity: 1; }
+    40% { transform: translateX(-10px); opacity: 1; }
+    50% { transform: translateX(10px); opacity: 1; }
+    60% { transform: translateX(-5px); opacity: 1; }
+    70% { transform: translateX(5px); opacity: 1; }
+    80% { transform: translateX(-2px); opacity: 1; }
+    90% { transform: translateX(2px); opacity: 1; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+
+/* 20. Heartbeat (心臓の鼓動・ドクン) */
+[data-anime="heartbeat"].is-animated {
+    animation: heartbeat-anim 1s ease-in-out forwards;
+}
+@keyframes heartbeat-anim {
+    0% { transform: scale(1); opacity: 0; }
+    10% { transform: scale(1); opacity: 1; }
+    30% { transform: scale(1.1); opacity: 1; }
+    45% { transform: scale(1); opacity: 1; }
+    60% { transform: scale(1.15); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* 21. Wobble (ゆらゆら揺れる) */
+[data-anime="wobble"].is-animated {
+    animation: wobble-anim 1s ease-in-out forwards;
+}
+@keyframes wobble-anim {
+    0% { transform: translateX(0) rotate(0deg); opacity: 0; }
+    10% { transform: translateX(0) rotate(0deg); opacity: 1; }
+    30% { transform: translateX(-15px) rotate(-5deg); opacity: 1; }
+    50% { transform: translateX(10px) rotate(3deg); opacity: 1; }
+    70% { transform: translateX(-5px) rotate(-2deg); opacity: 1; }
+    100% { transform: translateX(0) rotate(0deg); opacity: 1; }
+}
+
 /* Default (値なしや "fade" の場合は単なるフェードイン) */
 [data-anime="fade"],
 [data-anime=""] {
