@@ -602,6 +602,117 @@ main {
 }
 
 /* =========================================
+   Permanent Animation (data-anime)
+   ========================================= */
+
+/* float (ふわふわ浮く) */
+[data-anime="float"] {
+    animation: anime-float 3s ease-in-out infinite;
+}
+
+@keyframes anime-float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+/* spin (回転) */
+[data-anime="spin"] {
+    animation: anime-spin 4s linear infinite;
+}
+
+@keyframes anime-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* pulse (鼓動・拡大縮小) */
+[data-anime="pulse"] {
+    animation: anime-pulse 2s ease-in-out infinite;
+}
+
+@keyframes anime-pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* blink (点滅) */
+[data-anime="blink"] {
+    animation: anime-blink 1.5s ease-in-out infinite;
+}
+
+@keyframes anime-blink {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.3;
+    }
+}
+
+/* shake-x (横揺れ) */
+[data-anime="shake-x"] {
+    animation: anime-shake-x 2s ease-in-out infinite;
+}
+
+@keyframes anime-shake-x {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateX(-5px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateX(5px);
+    }
+}
+
+/* shake-y (縦揺れ) */
+[data-anime="shake-y"] {
+    animation: anime-shake-y 2s ease-in-out infinite;
+}
+
+@keyframes anime-shake-y {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+        transform: translateY(-5px);
+    }
+    20%, 40%, 60%, 80% {
+        transform: translateY(5px);
+    }
+}
+
+/* bounce (跳ねる) */
+[data-anime="bounce"] {
+    animation: anime-bounce 2s infinite;
+}
+
+@keyframes anime-bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-20px);
+    }
+    60% {
+        transform: translateY(-10px);
+    }
+}
+
+/* =========================================
    Components (Layout & Generic)
    ========================================= */
 
