@@ -1,0 +1,21 @@
+/*
+⑤ サイトの見た目を変更しましょう。
+解説：CSSは「Cascading Style Sheets（カスケーディング・スタイル・シーツ）」の略で、
+Webページの「デザイン（見た目）」を整えるための言語です。
+以下のジェネレーターツールを使って、自分好みのデザインを作ってみましょう！
+URL：https://tridentweb-oc.github.io/markup2026/assets/tools/generator.html
+*/
+
+h2 {}
+
+body {}
+
+header {
+    background: linear-gradient(75deg, #8d5ff7, #3b82f6, 0.3);
+}
+
+footer {
+    background-image: url('https://i.pinimg.com/736x/2a/0a/83/2a0a83ae39e1380c1d573f98be16fa90.jpg');
+
+    color: #000;
+}
