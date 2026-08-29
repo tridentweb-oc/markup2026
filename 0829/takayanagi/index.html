@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>トライデントコンピュータ専門学校 Webデザイン学科オープンキャンパス体験講座</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../../assets/base.css">
+    <link rel="stylesheet" href="./style.css">
+    <script defer src="../../assets/base.js"></script>
+</head>
+
+<body>
+    <header>
+        <!--
+        ① サイトのタイトルを変更しましょう。
+        解説：HTMLは「Hypertext Markup Language（ハイパーテキスト・マークアップ・ランゲージ）」の略で、
+        直訳すると「（すごい）文書に意味をもたせるための言語」です。Webページの「骨組み（構造）」を作ります。
+        <h1>のような印を「タグ」と呼び、h（heading）はテキストに「見出し」という意味を持たせます。
+        -->
+        <h1><a href="./index.html">SixTONES</a></h1>
+        <nav id="global-nav">
+            <ul>
+                <li><a href="#top">TOP</a></li>
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="#extra">EXTRA</a></li>
+            </ul>
+        </nav>
+    </header>
+    <button id="hamburger" class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <main>
+        <div class="mainvisual">
+            <div class="inner">
+                <!--
+                ② 画像のURLを変更して、好きな画像を表示しましょう。
+                解説：imgは「image」の略、srcは「source（情報源・出所）」の略です。
+                「src」のようにタグの中で追加情報を設定するものを「属性」と言います。
+                -->
+                <div class="slideshow">
+                    <div class="is-active">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiEeCW_CkoV9cyQydNHVcTBe0MNprElih6K3v1URbsAg&s=10"
+                            alt="スライド1">
+                    </div>
+                    <div>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSH9UngpHy6y6lvHxy9XS7D20WpXDl8R3HDDd8qBfQ6uw&s=10"
+                            alt="スライド2">
+                    </div>
+                    <div>
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8RC50om2WdjsH4ERDNqra1e46bZiXdfrLCCQea0kXAQ&s=10"
+                            alt="スライド3">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section id="about">
+            <div class="inner">
+                <h2 data-anime="">PROFILE</h2>
+                <!--
+                ③ 好きなものを紹介するコンポーネントを追加しましょう。
+                以下のサイトから土台となる「カラム（列）」をコピペし、
+                その中（divの中）に好きな「コンポーネント（部品）」を組み合わせてみましょう！
+                URL：https://tridentweb-oc.github.io/markup2026/assets/tools/snippets.html
+                -->
+                <div class="column-3">
+                    <div>
+                        <div class="card" data-anime="up">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5u28WXqjk3jTf43BJLHQERzmBIyiV5q8FM4nANZbcVg&s"
+                                alt="カード画像">
+                            <h3>ジェシー</h3>
+                            <p>カードの内容をここに入力します。様々なレイアウトの中で使えます。</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="card" data-anime="up">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWfo5FjM0CGTZpbenXIGvabsiacdKVJm3ctNxsUBonDg&s"
+                                alt="カード画像">
+                            <h3>京本大我</h3>
+                            <p>カードの内容をここに入力します。様々なレイアウトの中で使えます。</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="card" data-anime="up">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSdodx1ngRamsxM4x1lLTCi9yqAO893W1hqaIsJdMdX-A&s"
+                                alt="カード画像">
+                            <h3>田中樹</h3>
+                            <p>カードの内容をここに入力します。様々なレイアウトの中で使えます。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="column-3">
+                    <div>
+                        <div class="card" data-anime="up">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtt3q4_5KeLvP2-wKcwEa17ZWIcVZ7T5hl5I3byJXZ2g&s"
+                                alt="カード画像">
+                            <h3>髙地優吾</h3>
+                            <p>カードの内容をここに入力します。様々なレイアウトの中で使えます。</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="card" data-anime="up">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS98w_7_chzMkxpgv8LQse2U5fHrNCXULPF8vvjnSpGaQ&s"
+                                alt="カード画像">
+                            <h3>森本慎太郎</h3>
+                            <p>カードの内容をここに入力します。様々なレイアウトの中で使えます。</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="card" data-anime="up">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6sK8FEkGY6jMqaJQ1yJd38jVtocWSygfVVVue_vEUpQ&s"
+                                alt="カード画像">
+                            <h3>松村北斗</h3>
+                            <p>カードの内容をここに入力します。様々なレイアウトの中で使えます。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+        <div class="marquee">
+            <p>WELCOME TO MY WEBSITE ★ WEB DESIGN IS FUN ★ ENJOY CODING ★ </p>
+        </div>
+        <section id="extra">
+            <div class="inner">
+                <h2 data-anime="">TIMELINE</h2>
+                <!--
+                ④ 自由にコンポーネントを追加しましょう。
+                以下のサイトから土台となる「カラム（列）」をコピペし、
+                その中（divの中）に好きな「コンポーネント（部品）」を組み合わせてみましょう！
+                URL：https://tridentweb-oc.github.io/markup2026/assets/tools/snippets.html
+                -->
+                <div class="timeline">
+                    <div>
+                        <h4>2015年</h4>
+                        <p>グループ結成</p>
+                    </div>
+                    <div>
+                        <h4>2020年</h4>
+                        <p>CDデビュー</p>
+                    </div>
+                    <div>
+                        <h4>現在</h4>
+                        <p>スタジアムツアー</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--
+        ⑥ スクロールアニメーションを追加しましょう。
+        以下のサイトから好きなアニメーションをコピーして、
+        動かしたい要素のタグの中（例：<h2 data-anime="...">）に貼り付けてみましょう！
+        URL：https://tridentweb-oc.github.io/markup2026/assets/tools/animation.html
+        -->
+    </main>
+
+    <footer>
+        <div class="inner">
+            <div class="sns-links">
+                <a href="https://www.instagram.com/sixtones_official/?hl=ja" aria-label="Instagram"><i
+                        class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.tiktok.com/@sixtones_sme" aria-label="TikTok"><i
+                        class="fa-brands fa-tiktok"></i></a>
+                <a href="https://x.com/SixTONES_SME?lang=ja" aria-label="X (Twitter)"><i
+                        class="fa-brands fa-x-twitter"></i></a>
+                <a href="https://www.youtube.com/channel/UCwjAKjycHHT1QzHrQN5Stww" aria-label="YouTube"><i
+                        class="fa-brands fa-youtube"></i></a>
+            </div>
+            <p><small>&copy; 名古屋のIT・コンピューター専門学校TRIDENT college.</small></p>
+        </div>
+    </footer>
+</body>
+
+</html>
