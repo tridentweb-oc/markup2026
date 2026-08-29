@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>トライデントコンピュータ専門学校 Webデザイン学科オープンキャンパス体験講座</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../../assets/base.css">
+    <link rel="stylesheet" href="./style.css">
+    <script defer src="../../assets/base.js"></script>
+</head>
+
+<body>
+    <header>
+        <!--
+        ① サイトのタイトルを変更しましょう。
+        解説：HTMLは「Hypertext Markup Language（ハイパーテキスト・マークアップ・ランゲージ）」の略で、
+        直訳すると「（すごい）文書に意味をもたせるための言語」です。Webページの「骨組み（構造）」を作ります。
+        <h1>のような印を「タグ」と呼び、h（heading）はテキストに「見出し」という意味を持たせます。
+        -->
+        <h1><a href="./index.html">サイトのタイトルを入力</a></h1>
+        <nav id="global-nav">
+            <ul>
+                <li><a href="#top">TOP</a></li>
+                <li><a href="#about">ABOUT</a></li>
+                <li><a href="#extra">EXTRA</a></li>
+            </ul>
+        </nav>
+    </header>
+    <button id="hamburger" class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <main>
+        <div class="mainvisual">
+            <div class="inner">
+                <!--
+                ② 画像のURLを変更して、好きな画像を表示しましょう。
+                解説：imgは「image」の略、srcは「source（情報源・出所）」の略です。
+                「src」のようにタグの中で追加情報を設定するものを「属性」と言います。
+                -->
+                <img src="../../assets/images/mainvisual.jpg" alt="">
+            </div>
+        </div>
+        <section id="about">
+            <div class="inner">
+                <h2 data-anime="">ABOUT</h2>
+                <!--
+                ③ 好きなものを紹介するコンポーネントを追加しましょう。
+                以下のサイトから土台となる「カラム（列）」をコピペし、
+                その中（divの中）に好きな「コンポーネント（部品）」を組み合わせてみましょう！
+                URL：https://tridentweb-oc.github.io/markup2026/assets/tools/snippets.html
+                -->
+
+            </div>
+        </section>
+        <section id="extra">
+            <div class="inner">
+                <h2 data-anime="">EXTRA</h2>
+                <!--
+                ④ 自由にコンポーネントを追加しましょう。
+                以下のサイトから土台となる「カラム（列）」をコピペし、
+                その中（divの中）に好きな「コンポーネント（部品）」を組み合わせてみましょう！
+                URL：https://tridentweb-oc.github.io/markup2026/assets/tools/snippets.html
+                -->
+
+            </div>
+        </section>
+
+        <!--
+        ⑥ スクロールアニメーションを追加しましょう。
+        以下のサイトから好きなアニメーションをコピーして、
+        動かしたい要素のタグの中（例：<h2 data-anime="...">）に貼り付けてみましょう！
+        URL：https://tridentweb-oc.github.io/markup2026/assets/tools/animation.html
+        -->
+    </main>
+
+    <footer>
+        <div class="inner">
+            <p><small>&copy; 名古屋のIT・コンピューター専門学校TRIDENT college.</small></p>
+        </div>
+    </footer>
+</body>
+
+</html>
