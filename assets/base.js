@@ -15,7 +15,7 @@ const observer = new IntersectionObserver(
     }
 );
 
-document.querySelectorAll('[data-anime]').forEach((el) => {
+document.querySelectorAll('[data-scroll]').forEach((el) => {
     observer.observe(el);
 });
 

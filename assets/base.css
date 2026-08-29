@@ -194,152 +194,152 @@ main {
 }
 
 /* =========================================
-   Scroll Animation (data-anime)
+   Scroll Animation (data-scroll)
    ========================================= */
 
 /* Base settings for all animations */
-[data-anime] {
+[data-scroll] {
     opacity: 0;
     visibility: hidden;
     transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-[data-anime].is-animated {
+[data-scroll].is-animated {
     opacity: 1;
     visibility: visible;
 }
 
 /* 1. Fade Up (下から上へ) */
-[data-anime="up"] {
+[data-scroll="up"] {
     transform: translateY(50px);
 }
 
-[data-anime="up"].is-animated {
+[data-scroll="up"].is-animated {
     transform: translateY(0);
 }
 
 /* 2. Fade Down (上から下へ) */
-[data-anime="down"] {
+[data-scroll="down"] {
     transform: translateY(-50px);
 }
 
-[data-anime="down"].is-animated {
+[data-scroll="down"].is-animated {
     transform: translateY(0);
 }
 
 /* 3. Fade Left (右から左へ) */
-[data-anime="left"] {
+[data-scroll="left"] {
     transform: translateX(50px);
 }
 
-[data-anime="left"].is-animated {
+[data-scroll="left"].is-animated {
     transform: translateX(0);
 }
 
 /* 4. Fade Right (左から右へ) */
-[data-anime="right"] {
+[data-scroll="right"] {
     transform: translateX(-50px);
 }
 
-[data-anime="right"].is-animated {
+[data-scroll="right"].is-animated {
     transform: translateX(0);
 }
 
 /* 5. Flip Left (縦軸で回転) */
-[data-anime="flip-left"] {
+[data-scroll="flip-left"] {
     transform: perspective(600px) rotateY(-90deg);
 }
 
-[data-anime="flip-left"].is-animated {
+[data-scroll="flip-left"].is-animated {
     transform: perspective(600px) rotateY(0);
 }
 
 /* 6. Flip Right (縦軸で逆回転) */
-[data-anime="flip-right"] {
+[data-scroll="flip-right"] {
     transform: perspective(600px) rotateY(90deg);
 }
 
-[data-anime="flip-right"].is-animated {
+[data-scroll="flip-right"].is-animated {
     transform: perspective(600px) rotateY(0);
 }
 
 /* 7. Zoom In (拡大しながら出現) */
-[data-anime="zoom-in"] {
+[data-scroll="zoom-in"] {
     transform: scale(0.8);
 }
 
-[data-anime="zoom-in"].is-animated {
+[data-scroll="zoom-in"].is-animated {
     transform: scale(1);
 }
 
 /* 8. Flip Up (横軸で下から回転) */
-[data-anime="flip-up"] {
+[data-scroll="flip-up"] {
     transform: perspective(600px) rotateX(-90deg);
 }
 
-[data-anime="flip-up"].is-animated {
+[data-scroll="flip-up"].is-animated {
     transform: perspective(600px) rotateX(0);
 }
 
 /* 9. Flip Down (横軸で上から回転) */
-[data-anime="flip-down"] {
+[data-scroll="flip-down"] {
     transform: perspective(600px) rotateX(90deg);
 }
 
-[data-anime="flip-down"].is-animated {
+[data-scroll="flip-down"].is-animated {
     transform: perspective(600px) rotateX(0);
 }
 
 /* 10. Zoom Out (縮小しながら出現) */
-[data-anime="zoom-out"] {
+[data-scroll="zoom-out"] {
     transform: scale(1.2);
 }
 
-[data-anime="zoom-out"].is-animated {
+[data-scroll="zoom-out"].is-animated {
     transform: scale(1);
 }
 
 /* 11. Bounce 系 (バウンド・弾むような動き) */
-[data-anime^="bounce"] {
+[data-scroll^="bounce"] {
     /* bounceから始まる値には、行き過ぎて戻る特殊なイージングを適用 */
     transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-[data-anime="bounce-in"] {
+[data-scroll="bounce-in"] {
     transform: scale(0.5);
 }
 
-[data-anime="bounce-in"].is-animated {
+[data-scroll="bounce-in"].is-animated {
     transform: scale(1);
 }
 
-[data-anime="bounce-up"] {
+[data-scroll="bounce-up"] {
     transform: translateY(100px);
 }
 
-[data-anime="bounce-up"].is-animated {
+[data-scroll="bounce-up"].is-animated {
     transform: translateY(0);
 }
 
-[data-anime="bounce-down"] {
+[data-scroll="bounce-down"] {
     transform: translateY(-100px);
 }
 
-[data-anime="bounce-down"].is-animated {
+[data-scroll="bounce-down"].is-animated {
     transform: translateY(0);
 }
 
 /* 12. Blur (ブラー/ピント合わせ) */
-[data-anime="blur"] {
+[data-scroll="blur"] {
     filter: blur(10px);
 }
 
-[data-anime="blur"].is-animated {
+[data-scroll="blur"].is-animated {
     filter: blur(0);
 }
 
 /* 13. Wipe Right (左から右へワイプ) */
-[data-anime="wipe-right"] {
+[data-scroll="wipe-right"] {
     -webkit-mask-image: linear-gradient(to right, #000 50%, transparent 50%);
     mask-image: linear-gradient(to right, #000 50%, transparent 50%);
     -webkit-mask-size: 200% 100%;
@@ -348,13 +348,13 @@ main {
     mask-position: 100% 0;
 }
 
-[data-anime="wipe-right"].is-animated {
+[data-scroll="wipe-right"].is-animated {
     -webkit-mask-position: 0 0;
     mask-position: 0 0;
 }
 
 /* 14. Wipe Down (上から下へワイプ) */
-[data-anime="wipe-down"] {
+[data-scroll="wipe-down"] {
     -webkit-mask-image: linear-gradient(to bottom, #000 50%, transparent 50%);
     mask-image: linear-gradient(to bottom, #000 50%, transparent 50%);
     -webkit-mask-size: 100% 200%;
@@ -363,110 +363,241 @@ main {
     mask-position: 0 100%;
 }
 
-[data-anime="wipe-down"].is-animated {
+[data-scroll="wipe-down"].is-animated {
     -webkit-mask-position: 0 0;
     mask-position: 0 0;
 }
 
 /* 15. Rotate In (回転しながら出現) */
-[data-anime="rotate-in"] {
+[data-scroll="rotate-in"] {
     transform: rotate(-180deg) scale(0.5);
 }
 
-[data-anime="rotate-in"].is-animated {
+[data-scroll="rotate-in"].is-animated {
     transform: rotate(0) scale(1);
 }
 
 /* 16. Swing (看板のように揺れる) */
-[data-anime="swing"] {
+[data-scroll="swing"] {
     transform-origin: top center;
     transform: perspective(600px) rotateX(-90deg);
 }
 
-[data-anime="swing"].is-animated {
+[data-scroll="swing"].is-animated {
     transform: perspective(600px) rotateX(0);
     transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 
 /* 20. Jelly (ゼリー・ぷるぷる) */
-[data-anime="jelly"] {
+[data-scroll="jelly"] {
     transform-origin: bottom center;
 }
-[data-anime="jelly"].is-animated {
+
+[data-scroll="jelly"].is-animated {
     animation: jelly-anim 0.8s forwards;
 }
+
 @keyframes jelly-anim {
-    0% { transform: scale(1, 1); }
-    30% { transform: scale(1.25, 0.75); }
-    40% { transform: scale(0.75, 1.25); }
-    50% { transform: scale(1.15, 0.85); }
-    65% { transform: scale(0.95, 1.05); }
-    75% { transform: scale(1.05, 0.95); }
-    100% { transform: scale(1, 1); }
+    0% {
+        transform: scale(1, 1);
+    }
+
+    30% {
+        transform: scale(1.25, 0.75);
+    }
+
+    40% {
+        transform: scale(0.75, 1.25);
+    }
+
+    50% {
+        transform: scale(1.15, 0.85);
+    }
+
+    65% {
+        transform: scale(0.95, 1.05);
+    }
+
+    75% {
+        transform: scale(1.05, 0.95);
+    }
+
+    100% {
+        transform: scale(1, 1);
+    }
 }
 
 /* 18. Drop (上からドスンと落下) */
-[data-anime="drop"] {
+[data-scroll="drop"] {
     transform-origin: bottom center;
 }
-[data-anime="drop"].is-animated {
+
+[data-scroll="drop"].is-animated {
     animation: drop-anim 0.6s cubic-bezier(0.215, 0.610, 0.355, 1.000) forwards;
 }
+
 @keyframes drop-anim {
-    0% { transform: translateY(-100px) scaleY(1.2); opacity: 0; }
-    60% { transform: translateY(0) scaleY(0.7) scaleX(1.1); opacity: 1; }
-    80% { transform: translateY(-10px) scaleY(1.05) scaleX(0.95); opacity: 1; }
-    100% { transform: translateY(0) scaleY(1) scaleX(1); opacity: 1; }
+    0% {
+        transform: translateY(-100px) scaleY(1.2);
+        opacity: 0;
+    }
+
+    60% {
+        transform: translateY(0) scaleY(0.7) scaleX(1.1);
+        opacity: 1;
+    }
+
+    80% {
+        transform: translateY(-10px) scaleY(1.05) scaleX(0.95);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(0) scaleY(1) scaleX(1);
+        opacity: 1;
+    }
 }
 
 /* 19. Shake (ぶるぶる震える) */
-[data-anime="shake"].is-animated {
+[data-scroll="shake"].is-animated {
     animation: shake-anim 0.8s ease-in-out forwards;
 }
+
 @keyframes shake-anim {
-    0% { transform: translateX(0); opacity: 0; }
-    10% { transform: translateX(0); opacity: 1; }
-    20% { transform: translateX(-10px); opacity: 1; }
-    30% { transform: translateX(10px); opacity: 1; }
-    40% { transform: translateX(-10px); opacity: 1; }
-    50% { transform: translateX(10px); opacity: 1; }
-    60% { transform: translateX(-5px); opacity: 1; }
-    70% { transform: translateX(5px); opacity: 1; }
-    80% { transform: translateX(-2px); opacity: 1; }
-    90% { transform: translateX(2px); opacity: 1; }
-    100% { transform: translateX(0); opacity: 1; }
+    0% {
+        transform: translateX(0);
+        opacity: 0;
+    }
+
+    10% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    20% {
+        transform: translateX(-10px);
+        opacity: 1;
+    }
+
+    30% {
+        transform: translateX(10px);
+        opacity: 1;
+    }
+
+    40% {
+        transform: translateX(-10px);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translateX(10px);
+        opacity: 1;
+    }
+
+    60% {
+        transform: translateX(-5px);
+        opacity: 1;
+    }
+
+    70% {
+        transform: translateX(5px);
+        opacity: 1;
+    }
+
+    80% {
+        transform: translateX(-2px);
+        opacity: 1;
+    }
+
+    90% {
+        transform: translateX(2px);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
 }
 
 /* 20. Heartbeat (心臓の鼓動・ドクン) */
-[data-anime="heartbeat"].is-animated {
+[data-scroll="heartbeat"].is-animated {
     animation: heartbeat-anim 1s ease-in-out forwards;
 }
+
 @keyframes heartbeat-anim {
-    0% { transform: scale(1); opacity: 0; }
-    10% { transform: scale(1); opacity: 1; }
-    30% { transform: scale(1.1); opacity: 1; }
-    45% { transform: scale(1); opacity: 1; }
-    60% { transform: scale(1.15); opacity: 1; }
-    100% { transform: scale(1); opacity: 1; }
+    0% {
+        transform: scale(1);
+        opacity: 0;
+    }
+
+    10% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    30% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+
+    45% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    60% {
+        transform: scale(1.15);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 /* 21. Wobble (ゆらゆら揺れる) */
-[data-anime="wobble"].is-animated {
+[data-scroll="wobble"].is-animated {
     animation: wobble-anim 1s ease-in-out forwards;
 }
+
 @keyframes wobble-anim {
-    0% { transform: translateX(0) rotate(0deg); opacity: 0; }
-    10% { transform: translateX(0) rotate(0deg); opacity: 1; }
-    30% { transform: translateX(-15px) rotate(-5deg); opacity: 1; }
-    50% { transform: translateX(10px) rotate(3deg); opacity: 1; }
-    70% { transform: translateX(-5px) rotate(-2deg); opacity: 1; }
-    100% { transform: translateX(0) rotate(0deg); opacity: 1; }
+    0% {
+        transform: translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+
+    10% {
+        transform: translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+
+    30% {
+        transform: translateX(-15px) rotate(-5deg);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translateX(10px) rotate(3deg);
+        opacity: 1;
+    }
+
+    70% {
+        transform: translateX(-5px) rotate(-2deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(0) rotate(0deg);
+        opacity: 1;
+    }
 }
 
 /* Default (値なしや "fade" の場合は単なるフェードイン) */
-[data-anime="fade"],
-[data-anime=""] {
+[data-scroll="fade"],
+[data-scroll=""] {
     transform: none;
 }
 
