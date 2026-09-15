@@ -1,0 +1,520 @@
+/* ==============================================================
+   恐怖の館 ─ HAUNTED HOUSE ／ スタイルシート
+
+     ★①②③ 色      … index-start.html の <style> の中
+     ★④ フォント／アニメーション … ↓このファイルの :root の中
+     ★⑤ 画像        … index-start.html の <body> の中
+
+   色は HTML、フォントと動きは このファイルで えらびます。
+   ============================================================== */
+
+:root {
+
+    /* ==========================================================
+       ★えらぶ④ フォントと アニメーション
+       ========================================================== */
+
+    /* ④-1 見出しのフォント
+         "Yuji Boku", serif              … かすれた筆文字（こわい）
+         "Shippori Mincho B1", serif     … 明朝体（Jホラー）
+         "Yusei Magic", sans-serif       … 手書き風（ポップ）
+         "Zen Maru Gothic", sans-serif   … まるい文字（かわいい）  */
+    --font-midashi: "Yuji Boku", serif;
+
+
+    /* ---------- アニメーション（動きかた） ----------
+       さいしょは、どちらも none（動かない）にしてあります。
+       none を、下のリストの言葉に書きかえると、動きだします。 */
+
+    /* ④-2 大きい文字の動き
+         none                             … 動かさない（いまここ）
+         flicker 4s infinite              … ろうそくみたいにチカチカ
+         wobble 3s ease-in-out infinite   … ゆらゆら かたむく
+         shake 0.4s infinite              … ぶるぶる ふるえる      */
+    --ugoki-title: none;
+
+    /* ④-3 画像の動き
+         none                             … 動かさない（いまここ）
+         float 3s ease-in-out infinite    … ふわふわ 浮く
+         bounce 0.9s ease-in-out infinite … ぴょんぴょん はずむ
+         spin 8s linear infinite          … ぐるぐる まわる        */
+    --ugoki-e: none;
+
+
+    /* ==========================================================
+       ここから下は「見た目のしくみ」。さわらなくてOK。
+       よゆうがある人は、数字を変えてみよう
+       ========================================================== */
+
+    --font-body: "Shippori Mincho B1", serif;
+    /* ふつうの文字のフォント */
+    --kado: 14px;
+    /* かどのまるさ（26px にするとカートゥーンっぽい） */
+    --waku: 1px solid rgba(255, 255, 255, 0.14);
+    /* カードのわく線（3px solid #241338 にすると マンガっぽい） */
+    --card-bg: rgba(255, 255, 255, 0.05);
+    /* カードの背景 */
+    --kage: 0 12px 40px rgba(0, 0, 0, 0.6);
+    /* カードのかげ */
+    --fuchi-moji: 0px;
+    /* 文字のふちどりの太さ（2px にすると マンガっぽい） */
+    --fuchi-iro: #241338;
+    /* 文字のふちどりの色 */
+    --kurasa: 0.85;
+    /* 画面の四すみの暗さ（1に近いほど こわい） */
+    --haikei-nosa: 0.5;
+    /* 背景画像の こさ（0.2＝うっすら／0.5＝しっかり／1＝そのまま） */
+
+    /* 下の2つは、①②③で選んだ色から じどうで作られます */
+    --bg2: #000000;
+    --bg2: color-mix(in srgb, var(--bg) 55%, #000);
+    --usui: #4a4a4a;
+    --usui: color-mix(in srgb, var(--text) 32%, transparent);
+    --hikari: 0 0 16px rgba(255, 138, 31, 0.45);
+    --hikari: 0 0 18px color-mix(in srgb, var(--main) 55%, transparent);
+}
+
+
+/* ==============================================================
+   ここから下は、ぜんぶ「しくみ」の部分です
+   ============================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.9;
+    overflow-x: hidden;
+}
+
+/* 画面の四すみを暗くする（ビネットという手法。ぐっとこわくなる） */
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    /* クリックのじゃまをしない */
+    z-index: 500;
+    background: radial-gradient(ellipse at center,
+            transparent 40%, rgba(0, 0, 0, var(--kurasa)) 100%);
+}
+
+
+/* ==============================================================
+   ★えらぶ④ で使う「動きのレシピ」
+
+   ここに書いてある名前を、★④の none と入れかえると動きだします。
+   （いまは、どれも使われていません）
+   ============================================================== */
+
+/* ろうそくみたいにチカチカ */
+@keyframes flicker {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    92% {
+        opacity: 1;
+    }
+
+    94% {
+        opacity: 0.35;
+    }
+
+    96% {
+        opacity: 1;
+    }
+
+    97% {
+        opacity: 0.5;
+    }
+
+    98% {
+        opacity: 1;
+    }
+}
+
+/* ゆらゆら かたむく */
+@keyframes wobble {
+
+    0%,
+    100% {
+        transform: rotate(-2deg);
+    }
+
+    50% {
+        transform: rotate(2deg);
+    }
+}
+
+/* ぶるぶる ふるえる */
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    25% {
+        transform: translate(-3px, 1px);
+    }
+
+    50% {
+        transform: translate(3px, -1px);
+    }
+
+    75% {
+        transform: translate(-2px, -2px);
+    }
+}
+
+/* ふわふわ 浮く */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-18px);
+    }
+}
+
+/* ぴょんぴょん はずむ */
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1, 1);
+    }
+
+    50% {
+        transform: translateY(-22px) scale(0.96, 1.04);
+    }
+}
+
+/* ぐるぐる まわる */
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* ========== ヒーロー（いちばん上の大きい場所） ========== */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 24px;
+    position: relative;
+}
+
+.hero h1 {
+    font-family: "Creepster", cursive;
+    font-size: clamp(48px, 12vw, 130px);
+    color: var(--main);
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+    -webkit-text-stroke: var(--fuchi-moji) var(--fuchi-iro);
+    paint-order: stroke fill;
+    text-shadow: var(--hikari);
+    animation: var(--ugoki-title);
+}
+
+.hero .sub {
+    margin-top: 18px;
+    font-family: var(--font-midashi);
+    font-size: clamp(20px, 5vw, 32px);
+    letter-spacing: 0.3em;
+    color: var(--accent);
+}
+
+.hero .emoji {
+    width: clamp(150px, 38vw, 300px);
+    height: auto;
+    margin-bottom: 10px;
+    /* 画像のまわりをぼんやり光らせる（こわさが増す） */
+    filter: drop-shadow(0 0 30px rgba(0, 0, 0, 0.5));
+    animation: var(--ugoki-e);
+}
+
+.scroll-hint {
+    position: absolute;
+    bottom: 28px;
+    font-size: 13px;
+    letter-spacing: 0.2em;
+    opacity: 0.7;
+}
+
+
+/* ========== 警告セクション ========== */
+.warning {
+    /* 透かして、うしろの背景画像を見せる */
+    text-align: center;
+    padding: 110px 24px;
+}
+
+.warning .mark {
+    font-size: 60px;
+    display: block;
+    margin-bottom: 20px;
+    animation: var(--ugoki-title);
+}
+
+.warning h2 {
+    font-family: var(--font-midashi);
+    color: #d00000;
+    letter-spacing: 0.3em;
+    margin-bottom: 18px;
+    -webkit-text-stroke: var(--fuchi-moji) var(--fuchi-iro);
+    paint-order: stroke fill;
+}
+
+.warning p {
+    font-size: clamp(15px, 4vw, 20px);
+    letter-spacing: 0.15em;
+    opacity: 0.8;
+}
+
+
+/* ========== 中身のセクション ========== */
+section {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 90px 24px;
+}
+
+h2 {
+    font-family: var(--font-midashi);
+    font-weight: 400;
+    font-size: clamp(26px, 6vw, 42px);
+    color: var(--main);
+    text-align: center;
+    margin-bottom: 12px;
+    -webkit-text-stroke: var(--fuchi-moji) var(--fuchi-iro);
+    paint-order: stroke fill;
+    text-shadow: var(--hikari);
+}
+
+h2+.lead {
+    text-align: center;
+    color: var(--accent);
+    font-size: 14px;
+    letter-spacing: 0.2em;
+    margin-bottom: 46px;
+}
+
+
+/* ==============================================================
+   ★背景画像（position: sticky ＋ position: absolute）
+
+     .track     … 画像を「はりつかせる」ための土台。
+                  この土台を通りすぎるあいだ、画像は画面にとどまります。
+     .bg-e      … sticky で画面にはりつく係。
+                  height: 0 なので、文章のレイアウトはくずれません。
+     .bg-e img  … absolute で、すきな場所に大きく置きます。
+
+   ※ 数字（top / left / right / width）を変えると、
+      画像の場所と大きさが かわります
+   ============================================================== */
+
+/* 画像をはりつかせる土台 */
+.track {
+    position: relative;
+}
+
+/* はりつく係（場所を取らない） */
+.bg-e {
+    position: sticky;
+    top: 0;
+    height: 0;
+    z-index: 0;
+    pointer-events: none;
+    /* クリックのじゃまをしない */
+}
+
+/* 背景としての画像 */
+.bg-e img {
+    position: absolute;
+    width: clamp(240px, 46vw, 560px);
+    height: auto;
+    opacity: var(--haikei-nosa);
+    /* まわりを暗くぼかして、文字が読めるようにする */
+    filter: drop-shadow(0 0 70px rgba(0, 0, 0, 0.9));
+    animation: var(--ugoki-e);
+}
+
+/* 3まいを 左・右・まんなか に ちらして置く（バランスよく） */
+/* その1：ひだり上 */
+.bg-e.e1 img {
+    top: 10vh;
+    left: 2vw;
+    width: clamp(200px, 34vw, 420px);
+}
+
+/* その2：みぎ下 */
+.bg-e.e2 img {
+    top: 34vh;
+    right: 2vw;
+    width: clamp(200px, 34vw, 420px);
+}
+
+/* 文章・カード類は、かならず画像より前（上）に出す */
+.track>.warning,
+.track>section,
+.track>.kakurenbo {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* ========== 開催情報の表 ========== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+    border: var(--waku);
+    border-radius: var(--kado);
+    /* まるいかどから、はみ出さないようにする */
+    overflow: hidden;
+}
+
+th,
+td {
+    padding: 16px 14px;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.35);
+    text-align: left;
+}
+
+th {
+    color: var(--accent);
+    width: 38%;
+}
+
+
+/* ========== ボタン ========== */
+.btn-wrap {
+    text-align: center;
+    margin-top: 44px;
+}
+
+.btn {
+    display: inline-block;
+    background: var(--main);
+    color: var(--bg);
+    font-weight: 700;
+    padding: 17px 46px;
+    border: var(--waku);
+    border-radius: 999px;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    box-shadow: var(--kage);
+    transition: transform 0.2s;
+}
+
+.btn:hover {
+    transform: translateY(-3px) scale(1.04);
+}
+
+
+/* ========== かくれんぼ（くりかえしの演出） ========== */
+.kakurenbo {
+    padding: 0;
+    max-width: none;
+}
+
+.kakurenbo .line {
+    min-height: 62vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--font-midashi);
+    font-size: clamp(30px, 9vw, 74px);
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    color: var(--usui);
+}
+
+/* さいごの1行だけ、大きく目立たせる */
+.kakurenbo .line.last {
+    /* ↓ この中の画像を absolute で置くための目印 */
+    position: relative;
+    color: var(--main);
+    min-height: 100vh;
+    font-size: clamp(38px, 13vw, 110px);
+    -webkit-text-stroke: var(--fuchi-moji) var(--fuchi-iro);
+    paint-order: stroke fill;
+    text-shadow: var(--hikari);
+}
+
+/* ★背景画像 その3（sticky は使わず、absolute だけで置く）
+   「もういいよ」の 文字の うしろ に、まんなか置き。
+   場所ぎめ・こさは この わく（.haikei-waku）が ぜんぶ担当します */
+.line.last .haikei-waku {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    /* 自分の半分ぶん もどして、ぴったり まんなか */
+    width: clamp(260px, 52vw, 620px);
+    opacity: var(--haikei-nosa);
+    filter: drop-shadow(0 0 70px rgba(0, 0, 0, 0.9));
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* 中の画像は、なにも指定しない。
+   だから <img> に data-anime="left" を付けると、ちゃんと動きます */
+.line.last .haikei-waku img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* 文字は、画像より前（上）に出す */
+.line.last .moji {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* ========== スクロールでふわっと出る ========== */
+.reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+.reveal.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* ========== いちばん下 ========== */
+footer {
+    text-align: center;
+    padding: 40px 24px 60px;
+    font-size: 12px;
+    opacity: 0.6;
+}
+
+/* スマホで見たとき */
+@media (max-width: 600px) {
+    section {
+        padding: 64px 20px;
+    }
+}
