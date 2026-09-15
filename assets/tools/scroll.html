@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>スクロールアニメーション</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Noto+Sans+JP:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <!-- サイト用ベースCSS / JS / FontAwesome -->
+    <link rel="stylesheet" href="../../assets/base.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- ツール用CSS (上書き) -->
+    <link rel="stylesheet" href="./style.css">
+
+    <style>
+        .hero-section {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .hero-section h2 {
+            font-size: 2rem;
+            margin: 0;
+            background: linear-gradient(to right, #818cf8, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-section p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-top: 15px;
+        }
+
+        .scroll-down {
+            margin-top: 50px;
+            font-size: 2rem;
+            color: var(--accent);
+            animation: bounce-icon 2s infinite;
+        }
+
+        @keyframes bounce-icon {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-20px);
+            }
+
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .animation-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto 100px;
+            padding: 0 20px;
+        }
+
+        @media (min-width: 768px) {
+            .animation-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .snippet-block {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .snippet-header {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .snippet-header h3 {
+            margin: 0;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .play-btn {
+            background: #e2e8f0;
+            color: #334155;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            transition: background 0.2s, transform 0.1s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .play-btn:hover {
+            background: #cbd5e1;
+        }
+
+        .play-btn:active {
+            transform: scale(0.95);
+        }
+
+        .copy-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 12px;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .copy-btn:hover {
+            background: var(--accent-hover);
+        }
+
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+
+        .snippet-preview {
+            padding: 40px 20px;
+            background: #fdfdfd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 250px;
+        }
+
+        /* プレビュー内のカード */
+        .preview-box {
+            background: #31343C;
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            width: 100%;
+            max-width: 250px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .preview-box h4 {
+            margin: 0;
+            font-size: 20px;
+            color: white;
+        }
+
+        .snippet-code-bar {
+            background: #1e1e1e;
+            padding: 15px 20px;
+            text-align: center;
+            border-top: 1px solid #333;
+        }
+
+        .snippet-code-bar code {
+            color: #d4d4d4;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>スクロールアニメーション</h1>
+    </div>
+
+    <!-- ヒーローセクション（余白） -->
+    <div class="hero-section">
+        <h2>スクロールアニメーション</h2>
+        <p>下にスクロールして、アニメーションの動きを確認してみましょう！</p>
+        <div class="scroll-down"><i class="fa-solid fa-chevron-down"></i></div>
+    </div>
+
+    <!-- アニメーショングリッド -->
+    <div class="animation-grid">
+
+        <!-- fade -->
+        <div class="snippet-block">
+            <div class="snippet-header">
+                <h3>フェード (fade)</h3>
+                <div class="action-btns">
+                    <button class="play-btn" title="再生"><i class="fa-solid fa-play"></i> 再生</button>
+                    <button class="copy-btn" data-copy='data-scroll="fade"'>コピー</button>
+                </div>
+            </div>
+            <div class="snippet-preview">
+                <div class="preview-box" data-scroll="fade">
+                    <h4>fade</h4>
+                </div>
+            </div>
+            <div class="snippet-code-bar">
+                <code>data-scroll="fade"</code>
+            </div>
+        </div>
+
+        <!-- up -->
+        <div class="snippet-block">
+            <div class="snippet-header">
+                <h3>下から上へ (up)</h3>
+                <div class="action-btns">
+                    <button class="play-btn" title="再生"><i class="fa-solid fa-play"></i> 再生</button>
+                    <button class="copy-btn" data-copy='data-scroll="up"'>コピー</button>
+                </div>
+            </div>
+            <div class="snippet-preview">
+                <div class="preview-box" data-scroll="up">
+                    <h4>up</h4>
+                </div>
+            </div>
+            <div class="snippet-code-bar">
+                <code>data-scroll="up"</code>
+            </div>
+        </div>
+
+        <!-- down -->
+        <div class="snippet-block">
+            <div class="snippet-header">
+                <h3>上から下へ (down)</h3>
+                <div class="action-btns">
+                    <button class="play-btn" title="再生"><i class="fa-solid fa-play"></i> 再生</button>
+                    <button class="copy-btn" data-copy='data-scroll="down"'>コピー</button>
+                </div>
+            </div>
+            <div class="snippet-preview">
+                <div class="preview-box" data-scroll="down">
+                    <h4>down</h4>
+                </div>
+            </div>
+            <div class="snippet-code-bar">
+                <code>data-scroll="down"</code>
+            </div>
+        </div>
+
+        <!-- left -->
+        <div class="snippet-block">
+            <div class="snippet-header">
+                <h3>右から左へ (left)</h3>
+                <div class="action-btns">
+                    <button class="play-btn" title="再生"><i class="fa-solid fa-play"></i> 再生</button>
+                    <button class="copy-btn" data-copy='data-scroll="left"'>コピー</button>
+                </div>
+            </div>
+            <div class="snippet-preview">
+                <div class="preview-box" data-scroll="left">
+                    <h4>left</h4>
+                </div>
+            </div>
+            <div class="snippet-code-bar">
+                <code>data-scroll="left"</code>
+            </div>
+        </div>
+
+        <!-- right -->
+        <div class="snippet-block">
+            <div class="snippet-header">
+                <h3>左から右へ (right)</h3>
+                <div class="action-btns">
+                    <button class="play-btn" title="再生"><i class="fa-solid fa-play"></i> 再生</button>
+                    <button class="copy-btn" data-copy='data-scroll="right"'>コピー</button>
+                </div>
+            </div>
+            <div class="snippet-preview">
+                <div class="preview-box" data-scroll="right">
+                    <h4>right</h4>
+                </div>
+            </div>
+            <div class="snippet-code-bar">
+                <code>data-scroll="right"</code>
+            </div>
+        </div>
+
+        <!-- flip-left -->
+        <div class="snippet-block">
+            <div class="snippet-header">
+                <h3>縦回転 1 (flip-left)</h3>
+                <div class="action-btns">
+                    <button class="play-btn" title="再生"><i class="fa-solid fa-play"></i> 再生</button>
+                    <button class="copy-btn" data-copy='data-scroll="flip-left"'>コピー</button>
+                </div>
+            </div>
+            <div class="snippet-preview">
+                <div class="preview-box" data-scroll="flip-left">
+                    <h4>flip-left</h4>
+                </div>
+            </div>
+            <div class="snippet-code-bar">
+                <code>data-scroll="flip-left"</code>
+            </div>
+        </div>
+
+        <!-- flip-right -->
+        <div class="snippet-block">
+            <div class="snippet-header">
+                <h3>縦回転 2 (flip-right)</h3>
+                <div class="action-btns">
+                    <button class="play-btn" title="再生"><i class="fa-solid fa-play"></i> 再生</button>
+                    <button class="copy-btn" data-copy='data-scroll="flip-right"'>コピー</button>
+                </div>
+            </div>
+            <div class="snippet-preview">
+                <div class="preview-box" data-scroll="flip-right">
+                    <h4>flip-right</h4>
+                </div>
+            </div>
+            <div class="snippet-code-bar">
+                <code>data-scroll="flip-right"</code>
+            </div>
+        </div>
+
+        <!-- flip-up -->
+        <div class="snippet-block">
+            <div class="snippet-header">
+                <h3>横回転 1 (flip-up)</h3>
+                <div class="action-btns">
+                    <button class="play-btn" title="再生"><i class="fa-solid fa-play"></i> 再生</button>
+                    <button class="copy-btn" data-copy='data-scroll="flip-up"'>コピー</button>
+                </div>
+            </div>
+            <div class="snippet-preview">
+                <div class="preview-box" data-scroll="flip-up">
+                    <h4>flip-up</h4>
+                </div>
+            </div>
+            <div class="snippet-code-bar">
+                <code>data-scroll="flip-up"</code>
+            </div>
+        </div>
+
+        <!-- flip-down -->
+        <div class="snippet-block">
+            <div class="snippet-header">
+                <h3>横回転 2 (flip-down)</h3>
+                <div class="action-btns">
+                    <button class="play-btn" title="再生"><i class="fa-solid fa-play"></i> 再生</button>
+                    <button class="copy-btn" data-copy='data-scroll="flip-down"'>コピー</button>
+                </div>
+            </div>
+            <div class="snippet-preview">
+                <div class="preview-box" data-scroll="flip-down">
+                    <h4>flip-down</h4>
+                </div>
+            </div>
+            <div class="snippet-code-bar">
+                <code>data-scroll="flip-down"</code>
+            </div>
+        </div>
+
+        <!-- zoom-in -->
+        <div class="snippet-block">
+            <div class="snippet-header">
+                <h3>拡大 (zoom-in)</h3>
+                <div class="action-btns">
+                    <button class="play-btn" title="再生"><i class="fa-solid fa-play"></i> 再生</button>
+                    <button class="copy-btn" data-copy='data-scroll="zoom-in"'>コピー</button>
+                </div>
+            </div>
+            <div class="snippet-preview">
+                <div class="preview-box" data-scroll="zoom-in">
+                    <h4>zoom-in</h4>
+                </div>
+            </div>
+            <div class="snippet-code-bar">
+                <code>data-scroll="zoom-in"</code>
+            </div>
+        </div>
+
+        <!-- zoom-out -->
+        <div class="snippet-block">
+            <div class="snippet-header">
+                <h3>縮小 (zoom-out)</h3>
+                <div class="action-btns">
+                    <button class="play-btn" title="再生"><i class="fa-solid fa-play"></i> 再生</button>
+                    <button class="copy-btn" data-copy='data-scroll="zoom-out"'>コピー</button>
+                </div>
+            </div>
+            <div class="snippet-preview">
+                <div class="preview-box" data-scroll="zoom-out">
+                    <h4>zoom-out</h4>
+                </div>
+            </div>
+            <div class="snippet-code-bar">
+                <code>data-scroll="zoom-out"</code>
+            </div>
+        </div>
+
+        <!-- bounce-in -->
+        <div class="snippet-block">
+            <div class="snippet-header">
+                <h3>バウンド拡大 (bounce-in)</h3>
+                <div class="action-btns">
+                    <button class="play-btn" title="再生"><i class="fa-solid fa-play"></i> 再生</button>
+                    <button class="copy-btn" data-copy='data-scroll="bounce-in"'>コピー</button>
+                </div>
+            </div>
+            <div class="snippet-preview">
+                <div class="preview-box" data-scroll="bounce-in">
+                    <h4>bounce-in</h4>
+                </div>
+            </div>
+            <div class="snippet-code-bar">
+                <code>data-scroll="bounce-in"</code>
+            </div>
+        </div>
+
+        <!-- bounce-up -->
+        <div class="snippet-block">
+            <div class="snippet-header">
+                <h3>バウンド・上へ (bounce-up)</h3>
+                <div class="action-btns">
+                    <button class="play-btn" title="再生"><i class="fa-solid fa-play"></i> 再生</button>
+                    <button class="copy-btn" data-copy='data-scroll="bounce-up"'>コピー</button>
+                </div>
+            </div>
+            <div class="snippet-preview">
+                <div class="preview-box" data-scroll="bounce-up">
+                    <h4>bounce-up</h4>
+                </div>
+            </div>
+            <div class="snippet-code-bar">
+                <code>data-scroll="bounce-up"</code>
+            </div>
+        </div>
+
+        <!-- bounce-down -->
+        <div class="snippet-block">
+            <div class="snippet-header">
+                <h3>バウンド・下へ (bounce-down)</h3>
+                <div class="action-btns">
+                    <button class="play-btn" title="再生"><i class="fa-solid fa-play"></i> 再生</button>
+                    <button class="copy-btn" data-copy='data-scroll="bounce-down"'>コピー</button>
+                </div>
+            </div>
+            <div class="snippet-preview">
+                <div class="preview-box" data-scroll="bounce-down">
+                    <h4>bounce-down</h4>
+                </div>
+            </div>
+            <div class="snippet-code-bar">
+                <code>data-scroll="bounce-down"</code>
+            </div>
+        </div>
+
+        <!-- blur -->
+        <div class="snippet-block">
+            <div class="snippet-header">
+                <h3>ピント合わせ (blur)</h3>
+                <div class="action-btns">
+                    <button class="play-btn" title="再生"><i class="fa-solid fa-play"></i> 再生</button>
+                    <button class="copy-btn" data-copy='data-scroll="blur"'>コピー</button>
+                </div>
+            </div>
+            <div class="snippet-preview">
+                <div class="preview-box" data-scroll="blur">
+                    <h4>blur</h4>
+                </div>
+            </div>
+            <div class="snippet-code-bar">
+                <code>data-scroll="blur"</code>
+            </div>
+        </div>
+
+        <!-- wipe-right -->
+        <div class="snippet-block">
+            <div class="snippet-header">
+                <h3>右ワイプ (wipe-right)</h3>
+                <div class="action-btns">
+                    <button class="play-btn" title="再生"><i class="fa-solid fa-play"></i> 再生</button>
+                    <button class="copy-btn" data-copy='data-scroll="wipe-right"'>コピー</button>
+                </div>
+            </div>
+            <div class="snippet-preview">
+                <div class="preview-box" data-scroll="wipe-right">
+                    <h4>wipe-right</h4>
+                </div>
+            </div>
+            <div class="snippet-code-bar">
+                <code>data-scroll="wipe-right"</code>
+            </div>
+        </div>
+
+        <!-- wipe-down -->
+        <div class="snippet-block">
+            <div class="snippet-header">
+                <h3>下ワイプ (wipe-down)</h3>
+                <div class="action-btns">
+                    <button class="play-btn" title="再生"><i class="fa-solid fa-play"></i> 再生</button>
+                    <button class="copy-btn" data-copy='data-scroll="wipe-down"'>コピー</button>
+                </div>
+            </div>
+            <div class="snippet-preview">
+                <div class="preview-box" data-scroll="wipe-down">
+                    <h4>wipe-down</h4>
+                </div>
+            </div>
+            <div class="snippet-code-bar">
+                <code>data-scroll="wipe-down"</code>
+            </div>
+        </div>
+
+        <!-- rotate-in -->
+        <div class="snippet-block">
+            <div class="snippet-header">
+                <h3>回転出現 (rotate-in)</h3>
+                <div class="action-btns">
+                    <button class="play-btn" title="再生"><i class="fa-solid fa-play"></i> 再生</button>
+                    <button class="copy-btn" data-copy='data-scroll="rotate-in"'>コピー</button>
+                </div>
+            </div>
+            <div class="snippet-preview">
+                <div class="preview-box" data-scroll="rotate-in">
+                    <h4>rotate-in</h4>
+                </div>
+            </div>
+            <div class="snippet-code-bar">
+                <code>data-scroll="rotate-in"</code>
+            </div>
+        </div>
+
+        <!-- swing -->
+        <div class="snippet-block">
+            <div class="snippet-header">
+                <h3>看板スイング (swing)</h3>
+                <div class="action-btns">
+                    <button class="play-btn" title="再生"><i class="fa-solid fa-play"></i> 再生</button>
+                    <button class="copy-btn" data-copy='data-scroll="swing"'>コピー</button>
+                </div>
+            </div>
+            <div class="snippet-preview">
+                <div class="preview-box" data-scroll="swing">
+                    <h4>swing</h4>
+                </div>
+            </div>
+            <div class="snippet-code-bar">
+                <code>data-scroll="swing"</code>
+            </div>
+        </div>
+
+
+
+        <!-- jelly -->
+        <div class="snippet-block">
+            <div class="snippet-header">
+                <h3>ゼリー (jelly)</h3>
+                <div class="action-btns">
+                    <button class="play-btn" title="再生"><i class="fa-solid fa-play"></i> 再生</button>
+                    <button class="copy-btn" data-copy='data-scroll="jelly"'>コピー</button>
+                </div>
+            </div>
+            <div class="snippet-preview">
+                <div class="preview-box" data-scroll="jelly">
+                    <h4>jelly</h4>
+                </div>
+            </div>
+            <div class="snippet-code-bar">
+                <code>data-scroll="jelly"</code>
+            </div>
+        </div>
+        <!-- drop -->
+        <div class="snippet-block">
+            <div class="snippet-header">
+                <h3>落下 (drop)</h3>
+                <div class="action-btns">
+                    <button class="play-btn" title="再生"><i class="fa-solid fa-play"></i> 再生</button>
+                    <button class="copy-btn" data-copy='data-scroll="drop"'>コピー</button>
+                </div>
+            </div>
+            <div class="snippet-preview">
+                <div class="preview-box" data-scroll="drop">
+                    <h4>drop</h4>
+                </div>
+            </div>
+            <div class="snippet-code-bar">
+                <code>data-scroll="drop"</code>
+            </div>
+        </div>
+
+        <!-- shake -->
+        <div class="snippet-block">
+            <div class="snippet-header">
+                <h3>震える (shake)</h3>
+                <div class="action-btns">
+                    <button class="play-btn" title="再生"><i class="fa-solid fa-play"></i> 再生</button>
+                    <button class="copy-btn" data-copy='data-scroll="shake"'>コピー</button>
+                </div>
+            </div>
+            <div class="snippet-preview">
+                <div class="preview-box" data-scroll="shake">
+                    <h4>shake</h4>
+                </div>
+            </div>
+            <div class="snippet-code-bar">
+                <code>data-scroll="shake"</code>
+            </div>
+        </div>
+
+        <!-- heartbeat -->
+        <div class="snippet-block">
+            <div class="snippet-header">
+                <h3>鼓動 (heartbeat)</h3>
+                <div class="action-btns">
+                    <button class="play-btn" title="再生"><i class="fa-solid fa-play"></i> 再生</button>
+                    <button class="copy-btn" data-copy='data-scroll="heartbeat"'>コピー</button>
+                </div>
+            </div>
+            <div class="snippet-preview">
+                <div class="preview-box" data-scroll="heartbeat">
+                    <h4>heartbeat</h4>
+                </div>
+            </div>
+            <div class="snippet-code-bar">
+                <code>data-scroll="heartbeat"</code>
+            </div>
+        </div>
+
+        <!-- wobble -->
+        <div class="snippet-block">
+            <div class="snippet-header">
+                <h3>ゆらゆら (wobble)</h3>
+                <div class="action-btns">
+                    <button class="play-btn" title="再生"><i class="fa-solid fa-play"></i> 再生</button>
+                    <button class="copy-btn" data-copy='data-scroll="wobble"'>コピー</button>
+                </div>
+            </div>
+            <div class="snippet-preview">
+                <div class="preview-box" data-scroll="wobble">
+                    <h4>wobble</h4>
+                </div>
+            </div>
+            <div class="snippet-code-bar">
+                <code>data-scroll="wobble"</code>
+            </div>
+        </div>
+    </div>
+
+    <!-- Global Navigation -->
+    <div class="global-nav">
+        <a href="index.html" class="nav-item" title="Manual">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+            </svg>
+        </a>
+        <a href="snippets.html" class="nav-item" title="Snippets">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="16 18 22 12 16 6" />
+                <polyline points="8 6 2 12 8 18" />
+            </svg>
+        </a>
+        <a href="generator.html" class="nav-item" title="CSS Generator">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="13.5" cy="6.5" r=".5" />
+                <circle cx="17.5" cy="10.5" r=".5" />
+                <circle cx="8.5" cy="7.5" r=".5" />
+                <circle cx="6.5" cy="12.5" r=".5" />
+                <path
+                    d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
+            </svg>
+        </a>
+        <a href="scroll.html" class="nav-item" title="Scroll Animation">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path
+                    d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+                <path d="M5 3v4" />
+                <path d="M19 17v4" />
+                <path d="M3 5h4" />
+                <path d="M17 19h4" />
+            </svg>
+        </a>
+                <a href="animation.html" class="nav-item" title="Permanent Animation">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+            </svg>
+        </a>
+        <a href="qr.html" class="nav-item" title="QR Code">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect width="5" height="5" x="3" y="3" rx="1" />
+                <rect width="5" height="5" x="16" y="3" rx="1" />
+                <rect width="5" height="5" x="3" y="16" rx="1" />
+                <path d="M21 16h-3a2 2 0 0 0-2 2v3" />
+                <path d="M21 21v.01" />
+                <path d="M12 7v3a2 2 0 0 1-2 2H7" />
+                <path d="M3 12h.01" />
+                <path d="M12 3h.01" />
+                <path d="M12 16v.01" />
+                <path d="M16 12h1" />
+                <path d="M21 12v.01" />
+                <path d="M12 21v-1" />
+            </svg>
+        </a>
+    </div>
+
+    <!-- サイト用のJS -->
+    <script src="../../assets/base.js"></script>
+
+    <!-- コピー機能用JS -->
+    <script>
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const codeText = e.target.getAttribute('data-copy');
+                if (!codeText) return;
+
+                navigator.clipboard.writeText(codeText).then(() => {
+                    const originalText = e.target.textContent;
+                    e.target.textContent = 'コピー完了！';
+                    e.target.style.background = '#10b981';
+
+                    setTimeout(() => {
+                        e.target.textContent = originalText;
+                        e.target.style.background = '';
+                    }, 2000);
+                });
+            });
+        });
+
+        // 再生機能用JS
+        document.querySelectorAll('.play-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const block = e.target.closest('.snippet-block');
+                const previewBox = block.querySelector('.preview-box');
+
+                // 1. 一時的にトランジション（アニメーション）を無効化して瞬時に初期状態へ
+                previewBox.style.transition = 'none';
+                previewBox.classList.remove('is-animated');
+
+                // 2. ブラウザに再描画を強制
+                void previewBox.offsetWidth;
+
+                // 3. トランジションを元に戻し、再度アニメーション開始
+                previewBox.style.transition = '';
+                previewBox.classList.add('is-animated');
+            });
+        });
+    </script>
+</body>
+
+</html>

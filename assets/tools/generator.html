@@ -205,7 +205,48 @@
             background: #10b981;
         }
 
+        /* 個別コピー用のスタイル */
+        .mini-output {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
 
+        .mini-code-block {
+            flex: 1;
+            background: #f1f5f9;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: #334155;
+            white-space: pre-wrap;
+            border: 1px solid #cbd5e1;
+            overflow-x: auto;
+        }
+
+        .mini-copy-btn {
+            padding: 0.75rem;
+            background: #e2e8f0;
+            color: #334155;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+
+        .mini-copy-btn:hover {
+            background: #cbd5e1;
+        }
+        
+        .mini-copy-btn.copied {
+            background: #10b981;
+            color: white;
+        }
 
         @media (max-width: 900px) {
             .main-container {
@@ -278,7 +319,8 @@
                     </div>
                     <div class="control-item">
                         <div class="control-header"><span>スタイル (Style)</span></div>
-                        <select id="grad-type" style="width: 100%; padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border-color); background: #fff; color: #1e293b; font-family: inherit; font-size: 0.9rem; cursor: pointer; outline: none;">
+                        <select id="grad-type"
+                            style="width: 100%; padding: 0.5rem; border-radius: 8px; border: 1px solid var(--border-color); background: #fff; color: #1e293b; font-family: inherit; font-size: 0.9rem; cursor: pointer; outline: none;">
                             <option value="smooth">グラデーション (Smooth)</option>
                             <option value="stripe">ボーダー (Stripe)</option>
                             <option value="split">2色分割 (Split)</option>
@@ -300,6 +342,11 @@
                             <span id="grad-angle-val">135deg</span>
                         </div>
                         <input type="range" id="grad-angle" min="0" max="360" value="135">
+                    </div>
+                    <!-- 個別出力（Background） -->
+                    <div class="mini-output">
+                        <div class="mini-code-block" id="css-grad-out"></div>
+                        <button class="mini-copy-btn individual-copy-btn" data-target="css-grad-out">コピー</button>
                     </div>
                 </div>
 
@@ -323,7 +370,8 @@
                         <button class="preset-btn" data-x="4" data-y="4" data-blur="0" data-spread="0" data-c="#0f172a"
                             data-o="1" style="box-shadow: 4px 4px 0px 0px rgba(15,23,42,1);" title="Solid"></button>
                         <button class="preset-btn" data-x="0" data-y="0" data-blur="0" data-spread="4" data-c="#3b82f6"
-                            data-o="0.5" style="box-shadow: 0px 0px 0px 4px rgba(59,130,246,0.5);" title="Outline"></button>
+                            data-o="0.5" style="box-shadow: 0px 0px 0px 4px rgba(59,130,246,0.5);"
+                            title="Outline"></button>
                     </div>
                     <div class="control-item">
                         <div class="control-header"><span>横方向 (X)</span><span id="bs-x-val">0px</span></div>
@@ -350,6 +398,11 @@
                             <label class="control-header">透明度</label>
                             <input type="range" id="bs-opacity" min="0" max="1" step="0.05" value="0.4">
                         </div>
+                    </div>
+                    <!-- 個別出力（Box Shadow） -->
+                    <div class="mini-output">
+                        <div class="mini-code-block" id="css-bs-out"></div>
+                        <button class="mini-copy-btn individual-copy-btn" data-target="css-bs-out">コピー</button>
                     </div>
                 </div>
 
@@ -400,6 +453,11 @@
                             <input type="range" id="ts-opacity" min="0" max="1" step="0.05" value="0.3">
                         </div>
                     </div>
+                    <!-- 個別出力（Text Shadow） -->
+                    <div class="mini-output">
+                        <div class="mini-code-block" id="css-ts-out"></div>
+                        <button class="mini-copy-btn individual-copy-btn" data-target="css-ts-out">コピー</button>
+                    </div>
                 </div>
 
                 <!-- Border Radius -->
@@ -427,6 +485,11 @@
                         <div class="control-header"><span>左下 (Bottom Left)</span><span id="br-bl-val">24px</span></div>
                         <input type="range" id="br-bl" min="0" max="100" value="24">
                     </div>
+                    <!-- 個別出力（Border Radius） -->
+                    <div class="mini-output">
+                        <div class="mini-code-block" id="css-br-out"></div>
+                        <button class="mini-copy-btn individual-copy-btn" data-target="css-br-out">コピー</button>
+                    </div>
                 </div>
 
             </div>
@@ -447,6 +510,13 @@
                 <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
             </svg>
         </a>
+        <a href="snippets.html" class="nav-item" title="Snippets">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="16 18 22 12 16 6" />
+                <polyline points="8 6 2 12 8 18" />
+            </svg>
+        </a>
         <a href="generator.html" class="nav-item active" title="CSS Generator">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -458,14 +528,7 @@
                     d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
             </svg>
         </a>
-        <a href="snippets.html" class="nav-item" title="Snippets">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="16 18 22 12 16 6" />
-                <polyline points="8 6 2 12 8 18" />
-            </svg>
-        </a>
-        <a href="animation.html" class="nav-item" title="Animation">
+        <a href="scroll.html" class="nav-item" title="Scroll Animation">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path
@@ -474,6 +537,12 @@
                 <path d="M19 17v4" />
                 <path d="M3 5h4" />
                 <path d="M17 19h4" />
+            </svg>
+        </a>
+                <a href="animation.html" class="nav-item" title="Permanent Animation">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
             </svg>
         </a>
         <a href="qr.html" class="nav-item" title="QR Code">
@@ -598,6 +667,12 @@ box-shadow: ${boxShadow};
 text-shadow: ${textShadow};
 border-radius: ${borderRadius};`;
             cssOutput.textContent = cssText;
+
+            // Update Individual Outputs
+            if (document.getElementById('css-grad-out')) document.getElementById('css-grad-out').textContent = `background: ${bgGradient};`;
+            if (document.getElementById('css-bs-out')) document.getElementById('css-bs-out').textContent = `box-shadow: ${boxShadow};`;
+            if (document.getElementById('css-ts-out')) document.getElementById('css-ts-out').textContent = `text-shadow: ${textShadow};`;
+            if (document.getElementById('css-br-out')) document.getElementById('css-br-out').textContent = `border-radius: ${borderRadius};`;
         }
 
         // Add Event Listeners to all inputs
@@ -662,6 +737,26 @@ border-radius: ${borderRadius};`;
                     copyBtn.textContent = originalText;
                     copyBtn.classList.remove('copied');
                 }, 2000);
+            });
+        });
+
+        // Individual Copy Buttons Logic
+        document.querySelectorAll('.individual-copy-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetId = btn.getAttribute('data-target');
+                const targetEl = document.getElementById(targetId);
+                if (!targetEl) return;
+                
+                navigator.clipboard.writeText(targetEl.textContent).then(() => {
+                    const originalText = btn.textContent;
+                    btn.textContent = '✅';
+                    btn.classList.add('copied');
+
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                        btn.classList.remove('copied');
+                    }, 2000);
+                });
             });
         });
 
